@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TunerNavigationBlock">
+        <attr name="nbIsActive" format="boolean" />
+        <attr name="nbImage" format="integer" />
+        <attr name="nbText" format="string" />
+        <attr name="nbGroupText" format="string" />
+    </declare-styleable>
+</resources>

@@ -1,43 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    style="@style/AppTheme.Activity"
     tools:context="com.filipetrovic.auxilium.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:layout_below="@id/tvNote"
-        android:textColor="#111111"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/tvFrequency"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textSize="92sp"
-        android:textColor="#111111"
-        android:text="Hello World!"
-        android:id="@+id/tvNote" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:layout_below="@id/tvNote"
-        android:id="@+id/textViewpercentage" />
-    
-    <com.filipetrovic.auxilium.TunerLine
-        android:layout_width="match_parent"
+    <fragment android:name="com.filipetrovic.auxilium.TunerView.TunerFragment"
+        android:id="@+id/tunerFragment"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"/>
+        android:layout_width="match_parent"
+        tools:layout="@layout/fragment_tuner">
 
-</RelativeLayout>
+    </fragment>
+
+</LinearLayout>

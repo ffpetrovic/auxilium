@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="result"
+            type="String" />
+        <variable
+            name="note"
+            type="com.filipetrovic.auxilium.TunerUtils.Note" />
+        <variable name="isInTune" type="android.databinding.ObservableBoolean"/>
+    </data>
+    <LinearLayout
+        android:id="@+id/viewRoot"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:layout_marginRight="6dp"
+        android:layout_marginLeft="6dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{(!isInTune &amp;&amp; !result.equals(note.toString()))? View.VISIBLE : View.GONE}">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha=".15"
+                android:tint="@color/colorWhite"
+                android:src="@drawable/ic_note_circle_bg" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/spacegrotesk_medium"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="@color/colorWhite"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:text="@{note.note}" />
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{(!isInTune &amp;&amp; result.equals(note.toString()))? View.VISIBLE : View.GONE}">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tint="@color/colorWhite"
+                android:src="@drawable/ic_note_circle_bg" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/spacegrotesk_medium"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:text="@{note.note}" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{(isInTune &amp;&amp; !result.equals(note.toString()))? View.VISIBLE : View.GONE}">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tint="@color/colorGreen"
+                android:alpha="0.25"
+                android:src="@drawable/ic_note_circle_bg" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/spacegrotesk_bold"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="@color/colorGreen"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:text="@{note.note}" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{(isInTune &amp;&amp; result.equals(note.toString()))? View.VISIBLE : View.GONE}">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tint="@color/colorGreen"
+                android:src="@drawable/ic_note_circle_bg" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/spacegrotesk_bold"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:textColor="@color/colorWhite"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:text="@{note.note}" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

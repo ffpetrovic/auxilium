@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <import type="android.view.Gravity"/>
+        <variable
+            name="result"
+            type="com.filipetrovic.auxilium.TunerUtils.TunerResult" />
+        <variable
+            name="tuner"
+            type="com.filipetrovic.auxilium.TunerUtils.Tuner" />
+        <variable
+            name="notePlayer"
+            type="com.filipetrovic.auxilium.TunerUtils.NotePlayer" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        style="@style/AppTheme.Activity"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp"
+            >
+
+            <RelativeLayout android:layout_width="100dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_alignParentStart="true"
+                    app:srcCompat="@drawable/ic_logo_opaque" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/tunerStatus"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:letterSpacing="0.1"
+                android:textSize="12dp"
+                android:fontFamily="@font/spacegrotesk_bold"
+                android:text="test" />
+
+            <RelativeLayout android:layout_width="100dp"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="24dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentEnd="true"
+                    android:tint="@android:color/white"
+                    android:background="@android:color/transparent"
+                    app:srcCompat="@drawable/ic_menu" />
+            </RelativeLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:context=".TunerView.TunerFragment">
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Hello World!"-->
+                <!--android:layout_below="@id/tvNote"-->
+                <!--android:textColor="#111111"-->
+                <!--android:textStyle="bold"-->
+                <!--android:textSize="24sp"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:id="@+id/tvFrequency"/>-->
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/indicator_middle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:textColor="#3F3F3F"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="30dp"
+                android:text="♭" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="#3F3F3F"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="30dp"
+                android:text="#" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/tunerMainTextWrapper">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="136dp"
+                    android:textColor="#535353"
+                    android:text="@{result.getNoteLabel()}"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/spacegrotesk_regular"
+                    android:id="@+id/tvNote" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="36dp"
+                    android:textColor="#535353"
+                    android:fontFamily="@font/spacegrotesk_medium"
+                    android:text="@{result.getNoteAug()}"
+                    android:layout_toRightOf="@id/tvNote"
+                    android:layout_above="@id/tvOctave"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/tvNoteSharp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="36dp"
+                    android:textColor="#535353"
+                    android:fontFamily="@font/spacegrotesk_medium"
+                    android:layout_toRightOf="@id/tvNote"
+                    android:layout_alignBaseline="@id/tvNote"
+                    android:text="@{result.getOctaveLabel()}"
+                    android:background="@android:color/transparent"
+                    android:layout_marginRight="15dp"
+                    android:id="@+id/tvOctave" />
+            </RelativeLayout>
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="18sp"-->
+                <!--android:textColor="#535353"-->
+                <!--android:layout_below="@+id/tunerMainTextWrapper"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:text="0.0 Hz"-->
+                <!--android:fontFamily="@font/spacegrotesk_medium"-->
+                <!--android:id="@+id/tvFrequency" />-->
+
+            <com.filipetrovic.auxilium.TunerView.TunerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tunerLine"
+                app:indicatorType="@{result.getType()}"
+                app:indicatorY="@{result.getPercentage()}"
+                android:background="@android:color/transparent"/>
+
+            <!--<Button-->
+                <!--android:id="@+id/button"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:text="Button" />-->
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/tunerBlockSpecificDetails"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="0"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:gravity="center_vertical"
+            android:visibility="@{tuner.tunerMode.isChromatic() ? View.VISIBLE : View.GONE}"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:textSize="16dp"
+                android:fontFamily="@font/spacegrotesk_bold"
+                android:text="@{result.getNoteLabelWithAug() + String.valueOf(result.getOctaveLabel())}" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:visibility="@{result.isNull() ? View.GONE : View.VISIBLE}"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/spacegrotesk_medium"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/navigationBlockPercentageTextView"
+                    android:text="@{String.valueOf(result.getFrequencyLabel())}" />
+                <TextView
+                    android:id="@+id/navigationBlockPercentageTextView"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:textSize="16dp"
+                    android:alpha=".3"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/spacegrotesk_medium"
+                    android:text="@{`(` + String.valueOf(result.getPercentageLabel()) + `)`}" />
+            </RelativeLayout>
+        </LinearLayout>
+        <com.filipetrovic.auxilium.TunerView.TunerNotesCollectionBlock
+            android:id="@+id/notesCollectionBlock"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="0"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:gravity="center"
+            app:notes="@{tuner.tunerMode.getNotesObjectsForGroup()}"
+            app:currentNote="@{result.getNoteLabelWithAugAndOctave()}"
+            android:visibility="@{!tuner.tunerMode.isChromatic() ? View.VISIBLE : View.GONE}"
+        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="0"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            > <!-- Navigation Bar -->
+            <com.filipetrovic.auxilium.TunerView.TunerNavigationBlock
+                android:id="@+id/navigation_block_automatic"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/rect_selector"
+                app:nbIsActive="@{tuner.tunerMode.isChromatic()}"
+                app:nbImage="@{@drawable/ic_mode_automatic}"
+                app:nbText="@{`Automatic`}"
+                app:nbGroupText="@{``}" />
+            <com.filipetrovic.auxilium.TunerView.TunerNavigationBlock
+                android:id="@+id/navigation_block_pick"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/rect_selector"
+                app:nbIsActive="@{!tuner.tunerMode.isChromatic()}"
+                app:nbImage="@{@drawable/ic_mode_pick_arrow}"
+                app:nbText="@{tuner.tunerMode.isChromatic() ? `Pick Mode` : tuner.tunerMode.name}"
+                app:nbGroupText="@{tuner.tunerMode.group}" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
