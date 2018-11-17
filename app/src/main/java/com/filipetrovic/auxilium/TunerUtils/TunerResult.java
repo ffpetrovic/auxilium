@@ -71,7 +71,7 @@ public class TunerResult {
 
     public String getPercentageLabel() {
         if(this.type != Indicator.INDICATOR_TYPE.INACTIVE)
-            return String.valueOf((Math.round(this.percentageActual) - 50) / 2) + "%";
+            return String.valueOf((Math.round(this.percentageActual) - 50) / 10) + "%";
         else
             return "";
     }
@@ -164,5 +164,9 @@ public class TunerResult {
 //            this.percentage = 50.0;
             this.type = Indicator.INDICATOR_TYPE.INACTIVE;
         }
+    }
+
+    public boolean isEmpty() {
+        return this.type == Indicator.INDICATOR_TYPE.INACTIVE;
     }
 }

@@ -1,5 +1,6 @@
 package com.filipetrovic.auxilium.TunerView;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
@@ -59,7 +60,7 @@ public class TunerFragment extends Fragment {
         tunerMode.setNotes("E2 A2 D3 G3 B3 E4");
         tuner = new Tuner(getContext(), tunerMode);
         binding.setTuner(tuner);
-        binding.setNotePlayer(notePlayer);
+        binding.setCurrentNotePlaying(notePlayer.currentNote);
     }
 
     private void noteFound(final TunerResult note) {
@@ -67,24 +68,26 @@ public class TunerFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    binding.setResult(note);
+                    if(!notePlayer.isPlaying()) {
+                        binding.setResult(note);
 
 
-                    String statusText = "";
-                    if(note.percentageActual > 50f && note.type == Indicator.INDICATOR_TYPE.ACTIVE) {
-                        statusText = "Too sharp!";
-                    } else if(note.percentageActual < 50f && note.type == Indicator.INDICATOR_TYPE.ACTIVE) {
-                        statusText = "Too flat!";
-                    } else if(note.type == Indicator.INDICATOR_TYPE.CORRECT) {
-                        statusText = "In tune!";
-                    } else if(note.type == Indicator.INDICATOR_TYPE.INACTIVE) {
-                        statusText = "...";
-                    } else if(note.type == Indicator.INDICATOR_TYPE.INCORRECT) {
-                        statusText = "Off by " + Math.abs(50.00 - note.getPercentageActual()) + "%";
+                        String statusText = "";
+                        if(note.percentageActual > 50f && note.type == Indicator.INDICATOR_TYPE.ACTIVE) {
+                            statusText = "Too sharp!";
+                        } else if(note.percentageActual < 50f && note.type == Indicator.INDICATOR_TYPE.ACTIVE) {
+                            statusText = "Too flat!";
+                        } else if(note.type == Indicator.INDICATOR_TYPE.CORRECT) {
+                            statusText = "In tune!";
+                        } else if(note.type == Indicator.INDICATOR_TYPE.INACTIVE) {
+                            statusText = "...";
+                        } else if(note.type == Indicator.INDICATOR_TYPE.INCORRECT) {
+                            statusText = "Off by " + Math.abs(50.00 - note.getPercentageActual()) + "%";
+                        }
+                        ((TextView) getActivity().findViewById(R.id.tunerStatus)).setText(statusText);
+    //
+                        //    //                    pPerc = (float) perc;
                     }
-                    ((TextView) getActivity().findViewById(R.id.tunerStatus)).setText(statusText);
-//
-//                    pPerc = (float) perc;
                 }
             });
         }
@@ -163,9 +166,18 @@ public class TunerFragment extends Fragment {
         noteClickToPlayEvent = new INoteClickToPlayEvent() {
             @Override
             public void onEvent(String note) {
+                tuner.sendNullResult();
                 notePlayer.playNote(note);
+                tuner.setMuted(notePlayer.isPlaying());
             }
         };
+        binding.viewCurrentNotePlayingIndicator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                notePlayer.playNote("");
+                tuner.setMuted(notePlayer.isPlaying());
+            }
+        });
         binding.notesCollectionBlock.setNoteClickToPlayEvent(noteClickToPlayEvent);
         return binding.getRoot();
     }
@@ -185,6 +197,88 @@ public class TunerFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
 //        mListener = null;
+    }
+
+
+    @BindingAdapter({"app:isBottomBlockActive"})
+    public static void setIsBottomBlockActive(final View view, boolean isActive) {
+        if(view.getId() == R.id.viewCurrentNotePlayingIndicator) {
+            if(isActive) {
+                view.setVisibility(View.VISIBLE);
+                view.animate().alpha(1f).setListener(null);
+            } else {
+                view.animate().alpha(0).setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        view.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                });
+            }
+        } else if(view.getId() == R.id.navigationBlockWrapper) {
+            if(isActive) {
+                view.animate().translationY(0f);
+            } else {
+                view.animate().translationY(200f);
+            }
+        }
+    }
+
+    @BindingAdapter({"app:isTunerResultVisible"})
+    public static void setIsTunerResultVisible(final View view, boolean isActive) {
+        if(view.getId() == R.id.tunerListeningBlock) {
+            if(isActive) {
+                ((TunerModeListeningBlock) view).setVisibility(View.VISIBLE);
+                ((TunerModeListeningBlock) view).animate().alpha(1f).setDuration(400);
+                ((TunerModeListeningBlock) view).startAnimation();
+            } else {
+                ((TunerModeListeningBlock) view).stopAnimation();
+                view.animate().alpha(0f).setDuration(10);
+                view.setVisibility(View.GONE);
+            }
+        } else if(view.getId() == R.id.tunerMainTextWrapper) {
+            if(isActive) {
+                view.setVisibility(View.VISIBLE);
+                view.setAlpha(1f);
+                view.animate().setListener(null);
+            } else {
+                view.animate().alpha(0).setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animator) {
+                        view.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animator) {
+
+                    }
+                });
+            }
+        }
     }
 
     @BindingAdapter({"android:src"})

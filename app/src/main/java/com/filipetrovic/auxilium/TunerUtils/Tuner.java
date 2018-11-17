@@ -38,6 +38,8 @@ public class Tuner {
     private OnNoteFoundListener onNoteFoundListener;
     Thread audioThread;
 
+    private boolean isMuted = false;
+
     public TunerMode tunerMode;
 
     static {
@@ -103,44 +105,46 @@ public class Tuner {
 
     private void findNote() {
         while (isRecording) {
-            amountRead = audioRecord.read(intermediaryBuffer, 0, readSize);
-            buffer = shortArrayToFloatArray(intermediaryBuffer);
-            final TunerResult result = new TunerResult(getPitch(buffer), tunerMode.getNotesObjects());
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    pushType(result.type);
-                    Indicator.INDICATOR_TYPE tempType = result.type;
-                    pushNote(result.note + result.octave);
-                    result.type = getType();
+            if(!isMuted) {
+                amountRead = audioRecord.read(intermediaryBuffer, 0, readSize);
+                buffer = shortArrayToFloatArray(intermediaryBuffer);
+                final TunerResult result = new TunerResult(getPitch(buffer), tunerMode.getNotesObjects());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        pushType(result.type);
+                        Indicator.INDICATOR_TYPE tempType = result.type;
+                        pushNote(result.note + result.octave);
+                        result.type = getType();
 
-                    if(getType() == Indicator.INDICATOR_TYPE.CORRECT && !tunerMode.isChromatic()) {
-                        tunerMode.setInTune(result.getNoteLabelWithAugAndOctave());
+                        if(getType() == Indicator.INDICATOR_TYPE.CORRECT && !tunerMode.isChromatic()) {
+                            tunerMode.setInTune(result.getNoteLabelWithAugAndOctave());
 
-                    }
+                        }
 
 
-                    if(
-                        !(tempType == Indicator.INDICATOR_TYPE.INACTIVE &&
-                        result.type != Indicator.INDICATOR_TYPE.INACTIVE) &&
-                        onNoteFoundListener != null &&
-                        (result.note + result.octave).equals(getNote())) {
+                        if(
+                                !(tempType == Indicator.INDICATOR_TYPE.INACTIVE &&
+                                        result.type != Indicator.INDICATOR_TYPE.INACTIVE) &&
+                                        onNoteFoundListener != null &&
+                                        (result.note + result.octave).equals(getNote())) {
                             currentNoteResult = result;
                             onNoteFoundListener.onEvent(result);
                             if(result.type != Indicator.INDICATOR_TYPE.INACTIVE)
                                 prevNoteResult = result;
-                    }
+                        }
 
-                    // Passing the previous successful result, as long as it's not -1
-                    // because otherwise, the tuner would pick up very little sound
+                        // Passing the previous successful result, as long as it's not -1
+                        // because otherwise, the tuner would pick up very little sound
 //                    if(!(result.note + result.octave).equals(getNote())
 //                            && prevNoteResult != null && onNoteFoundListener != null && !getNote().equals("00")) {
 //                        onNoteFoundListener.onEvent(prevNoteResult);
 //                    }
 //                    if(onNoteFoundListener != null)
 //                        onNoteFoundListener.onEvent(result);
-                }
-            });
+                    }
+                });
+            }
         }
     }
 
@@ -252,6 +256,14 @@ public class Tuner {
         nullTunerResult.type = Indicator.INDICATOR_TYPE.INACTIVE;
         nullTunerResult.percentage = 50f;
         onNoteFoundListener.onEvent(nullTunerResult);
+    }
+
+    public boolean isMuted() {
+        return isMuted;
+    }
+
+    public void setMuted(boolean muted) {
+        isMuted = muted;
     }
 
     public void setOnNoteFoundListener(Tuner.OnNoteFoundListener eventListener) {

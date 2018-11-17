@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
 import android.databinding.ViewDataBinding;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -91,6 +92,16 @@ public class TunerNotesCollectionBlock extends LinearLayout {
         if(collectionBlockView.noteViewBindings != null) {
             for(ViewNoteSingleBinding noteViewBinding : collectionBlockView.noteViewBindings) {
                 noteViewBinding.setResult(note);
+            }
+        }
+    }
+
+    @BindingAdapter({"currentNotePlaying"})
+    public static void setCurrentNotePlaying(TunerNotesCollectionBlock collectionBlockView,
+                                      ObservableField<String> note) {
+        if(collectionBlockView.noteViewBindings != null) {
+            for(ViewNoteSingleBinding noteViewBinding : collectionBlockView.noteViewBindings) {
+                noteViewBinding.setCurrentNotePlaying(note);
             }
         }
     }

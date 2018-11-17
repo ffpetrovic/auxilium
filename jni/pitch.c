@@ -81,9 +81,15 @@ jfloat Java_com_filipetrovic_auxilium_TunerUtils_Tuner_getPitch(JNIEnv * env, jo
         fvec_set_sample(input, body[i], i);
     }
     (*env)->ReleaseFloatArrayElements(env, inputArray, body, 0);
-    // 2. compute and return pitch
-    aubio_pitch_do (o, input, pitch);
-    float freq = fvec_get_sample(pitch, 0);
+
+
+    float freq = 0;
+    if(aubio_silence_detection(input, 45) == 0) {
+        aubio_pitch_do (o, input, pitch);
+        freq = fvec_get_sample(pitch, 0);
+    } else {
+        freq = 0;
+    }
     return freq;
 }
 

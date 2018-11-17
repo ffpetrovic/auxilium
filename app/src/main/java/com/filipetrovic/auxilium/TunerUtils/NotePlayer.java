@@ -52,6 +52,9 @@ public class NotePlayer {
         } catch(Exception e) {
             Log.e("AUX_LOG", e.toString());
         }
+    }
 
+    public boolean isPlaying() {
+        return !currentNote.get().equals("");
     }
 }

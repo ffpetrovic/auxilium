@@ -11,8 +11,8 @@
             name="tuner"
             type="com.filipetrovic.auxilium.TunerUtils.Tuner" />
         <variable
-            name="notePlayer"
-            type="com.filipetrovic.auxilium.TunerUtils.NotePlayer" />
+            name="currentNotePlaying"
+            type="android.databinding.ObservableField&lt;String&gt;" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,11 +83,10 @@
                 <!--android:id="@+id/tvFrequency"/>-->
 
             <ImageView
-                android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                app:srcCompat="@drawable/indicator_middle" />
+                app:srcCompat="@drawable/indicator_middle"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -109,12 +108,23 @@
                 android:layout_marginTop="30dp"
                 android:text="#" />
 
+            <com.filipetrovic.auxilium.TunerView.TunerModeListeningBlock
+                android:id="@+id/tunerListeningBlock"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@android:color/transparent"
+                app:isTunerResultVisible="@{result.isEmpty()}"/>
+
             <RelativeLayout
+                android:id="@+id/tunerMainTextWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:id="@+id/tunerMainTextWrapper">
+                app:isTunerResultVisible="@{!result.isEmpty()}">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -192,39 +202,30 @@
             >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
+                android:layout_weight="1"
                 android:textSize="16dp"
                 android:fontFamily="@font/spacegrotesk_bold"
                 android:text="@{result.getNoteLabelWithAug() + String.valueOf(result.getOctaveLabel())}" />
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textSize="16dp"
                 android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="@font/spacegrotesk_bold"
+                android:text="@{String.valueOf(result.getFrequencyLabel())}" />
+            <TextView
+                android:id="@+id/navigationBlockPercentageTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:gravity="end"
-                android:visibility="@{result.isNull() ? View.GONE : View.VISIBLE}"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:fontFamily="@font/spacegrotesk_medium"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/navigationBlockPercentageTextView"
-                    android:text="@{String.valueOf(result.getFrequencyLabel())}" />
-                <TextView
-                    android:id="@+id/navigationBlockPercentageTextView"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:textSize="16dp"
-                    android:alpha=".3"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="@font/spacegrotesk_medium"
-                    android:text="@{`(` + String.valueOf(result.getPercentageLabel()) + `)`}" />
-            </RelativeLayout>
+                android:layout_weight="1"
+                android:textSize="16dp"
+                android:alpha=".3"
+                android:fontFamily="@font/spacegrotesk_bold"
+                android:text="@{String.valueOf(result.getPercentageLabel())}" />
         </LinearLayout>
         <com.filipetrovic.auxilium.TunerView.TunerNotesCollectionBlock
             android:id="@+id/notesCollectionBlock"
@@ -236,35 +237,75 @@
             android:gravity="center"
             app:notes="@{tuner.tunerMode.getNotesObjectsForGroup()}"
             app:currentNote="@{result.getNoteLabelWithAugAndOctave()}"
+            app:currentNotePlaying="@{currentNotePlaying}"
             android:visibility="@{!tuner.tunerMode.isChromatic() ? View.VISIBLE : View.GONE}"
         />
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="0"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            > <!-- Navigation Bar -->
-            <com.filipetrovic.auxilium.TunerView.TunerNavigationBlock
-                android:id="@+id/navigation_block_automatic"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/rect_selector"
-                app:nbIsActive="@{tuner.tunerMode.isChromatic()}"
-                app:nbImage="@{@drawable/ic_mode_automatic}"
-                app:nbText="@{`Automatic`}"
-                app:nbGroupText="@{``}" />
-            <com.filipetrovic.auxilium.TunerView.TunerNavigationBlock
-                android:id="@+id/navigation_block_pick"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/rect_selector"
-                app:nbIsActive="@{!tuner.tunerMode.isChromatic()}"
-                app:nbImage="@{@drawable/ic_mode_pick_arrow}"
-                app:nbText="@{tuner.tunerMode.isChromatic() ? `Pick Mode` : tuner.tunerMode.name}"
-                app:nbGroupText="@{tuner.tunerMode.group}" />
-        </LinearLayout>
+            android:layout_height="60dp">
+            <LinearLayout
+                android:id="@+id/viewCurrentNotePlayingIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                app:isBottomBlockActive="@{!currentNotePlaying.equals(``)}"
+                android:gravity="center"
+                android:visibility="gone">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="@{ !currentNotePlaying.equals(``) ? View.VISIBLE : View.GONE }">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:textSize="16dp"
+                        android:textAlignment="center"
+                        android:fontFamily="@font/spacegrotesk_bold"
+                        android:text="@{`Playing ` + currentNotePlaying.get() + ` . . .` }" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="12dp"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.1"
+                        android:fontFamily="@font/spacegrotesk_bold"
+                        android:text="Tap to stop" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/navigationBlockWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="0"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                app:isBottomBlockActive="@{currentNotePlaying.equals(``)}"
+                > <!-- Navigation Bar -->
+                <com.filipetrovic.auxilium.TunerView.TunerNavigationBlock
+                    android:id="@+id/navigation_block_automatic"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/rect_selector"
+                    app:nbIsActive="@{tuner.tunerMode.isChromatic()}"
+                    app:nbImage="@{@drawable/ic_mode_automatic}"
+                    app:nbText="@{`Automatic`}"
+                    app:nbGroupText="@{``}" />
+                <com.filipetrovic.auxilium.TunerView.TunerNavigationBlock
+                    android:id="@+id/navigation_block_pick"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/rect_selector"
+                    app:nbIsActive="@{!tuner.tunerMode.isChromatic()}"
+                    app:nbImage="@{@drawable/ic_mode_pick_arrow}"
+                    app:nbText="@{tuner.tunerMode.isChromatic() ? `Pick Mode` : tuner.tunerMode.name}"
+                    app:nbGroupText="@{tuner.tunerMode.group}" />
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </layout>

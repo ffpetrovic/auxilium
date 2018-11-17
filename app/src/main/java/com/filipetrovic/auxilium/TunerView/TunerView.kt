@@ -48,6 +48,10 @@ class TunerView : View {
         indicatorInactiveDrawable = Indicator(context, Indicator.INDICATOR_TYPE.INACTIVE, indicatorHeight, indicatorBgHeight)
         indicatorIncorrectDrawable = Indicator(context, Indicator.INDICATOR_TYPE.INCORRECT, indicatorHeight, indicatorBgHeight)
 
+        indicatorActiveDrawable.alpha = 0;
+        indicatorCorrectDrawable.alpha = 0;
+        indicatorInactiveDrawable.alpha = 0;
+        indicatorIncorrectDrawable.alpha = 0;
 
     }
 
@@ -80,13 +84,13 @@ class TunerView : View {
         var increment = 10
         needsToDraw = false
         if(Math.abs(yCurrent - yDestination) > .1f) {
-            var increment: Float = (Math.abs(yCurrent - yDestination)) / 8
-            if(increment > canvas.height / 10)
-                increment = canvas.height / 10f
+            var posIncrement: Float = (Math.abs(yCurrent - yDestination)) / 8
+            if(posIncrement > canvas.height / 10)
+                posIncrement = canvas.height / 10f
             if(yCurrent > yDestination) {
-                yCurrent -= increment
+                yCurrent -= posIncrement
             } else {
-                yCurrent += increment
+                yCurrent += posIncrement
             }
             needsToDraw = true
         }
@@ -105,15 +109,15 @@ class TunerView : View {
 //        Log.d("TESTTEST", yDestination.toString())
 
         if(type == Indicator.INDICATOR_TYPE.CORRECT) {
-            if(indicatorActiveDrawable.alpha > 0 + increment) {
+            if(indicatorActiveDrawable.alpha > 0) {
                 indicatorActiveDrawable.alpha -= increment;
                 needsToDraw=true;
             }
-            if(indicatorInactiveDrawable.alpha > 0 + increment) {
+            if(indicatorInactiveDrawable.alpha > 0) {
                 indicatorInactiveDrawable.alpha -= increment
                 needsToDraw=true
             }
-            if(indicatorIncorrectDrawable.alpha > 0 + increment) {
+            if(indicatorIncorrectDrawable.alpha > 0) {
                 indicatorIncorrectDrawable.alpha -= increment
                 needsToDraw=true
             }
@@ -128,46 +132,44 @@ class TunerView : View {
             }
 
             if(indicatorActiveDrawable.alpha < 255 - increment) {
-//                Log.d("AUX_LOG", type.toString() + " BEFORE " + indicatorActiveDrawable.alpha.toString())
-                indicatorActiveDrawable.alpha = 255
-//                Log.d("AUX_LOG", type.toString() + " AFTER " + indicatorActiveDrawable.alpha.toString())
+                indicatorActiveDrawable.alpha += increment
                 needsToDraw=true
             }
-            if(indicatorIncorrectDrawable.alpha > 0 + increment) {
+            if(indicatorIncorrectDrawable.alpha > 0) {
                 indicatorIncorrectDrawable.alpha -= increment
                 needsToDraw=true
             }
-            if(indicatorInactiveDrawable.alpha > 0 + increment) {
+            if(indicatorInactiveDrawable.alpha > 0) {
                 indicatorInactiveDrawable.alpha -= increment
                 needsToDraw=true
             }
         } else if(type == Indicator.INDICATOR_TYPE.INACTIVE){
-            if(indicatorCorrectDrawable.alpha > 0 + increment) {
+            if(indicatorCorrectDrawable.alpha > 0) {
                 indicatorCorrectDrawable.alpha -= increment
                 needsToDraw=true
             }
-            if(indicatorActiveDrawable.alpha > 0 + increment) {
+            if(indicatorActiveDrawable.alpha > 0) {
                 indicatorActiveDrawable.alpha -= increment
                 needsToDraw=true
             }
-            if(indicatorIncorrectDrawable.alpha > 0 + increment) {
+            if(indicatorIncorrectDrawable.alpha > 0) {
                 indicatorIncorrectDrawable.alpha -= increment
                 needsToDraw=true
             }
-            if(indicatorInactiveDrawable.alpha < 255 - increment) {
-                indicatorInactiveDrawable.alpha += increment
-                needsToDraw=true
-            }
+//            if(indicatorInactiveDrawable.alpha < 255 - increment) {
+//                indicatorInactiveDrawable.alpha += increment
+//                needsToDraw=true
+//            }
         } else if(type == Indicator.INDICATOR_TYPE.INCORRECT){
-            if(indicatorCorrectDrawable.alpha > 0 + increment) {
+            if(indicatorCorrectDrawable.alpha > 0) {
                 indicatorCorrectDrawable.alpha -= increment
                 needsToDraw=true
             }
-            if(indicatorActiveDrawable.alpha > 0 + increment) {
+            if(indicatorActiveDrawable.alpha > 0) {
                 indicatorActiveDrawable.alpha -= increment
                 needsToDraw=true
             }
-            if(indicatorInactiveDrawable.alpha > 0 + increment) {
+            if(indicatorInactiveDrawable.alpha > 0) {
                 indicatorInactiveDrawable.alpha -= increment
                 needsToDraw=true
             }
@@ -199,8 +201,6 @@ class TunerView : View {
         indicatorCorrectDrawable.draw(bitmapCanvas)
         indicatorActiveDrawable.setBounds(0, 0, bitmap.width, bitmap.height)
         indicatorActiveDrawable.draw(bitmapCanvas)
-        indicatorInactiveDrawable.setBounds(0, 0, bitmap.width, bitmap.height)
-        indicatorInactiveDrawable.draw(bitmapCanvas)
         indicatorIncorrectDrawable.setBounds(0, 0, bitmap.width, bitmap.height)
         indicatorIncorrectDrawable.draw(bitmapCanvas)
 
