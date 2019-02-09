@@ -8,6 +8,8 @@
     <color name="colorRed">#FF328B</color>
     <color name="colorWhite">#F2F4F4</color>
     <color name="colorGray">#333333</color>
+    <color name="colorTextLight">#9EA1A7</color>
+    <color name="colorBackgroundLight">#252A2C</color>
     <color name="colorTextSecondary">#464646</color>
     <color name="colorWhiteTransparent">#00F2F4F4</color>
     <color name="colorGrayTransparent">#00333333</color>

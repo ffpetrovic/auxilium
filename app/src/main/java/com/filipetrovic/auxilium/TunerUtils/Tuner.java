@@ -23,6 +23,7 @@ public class Tuner {
     private short[]     intermediaryBuffer = null;
     private short[]     statusBuffer = new short[20];
     private String[]    noteBuffer = new String[30];
+    public boolean      isFake = false;
 
 
     public long ptr = 0;
@@ -39,6 +40,7 @@ public class Tuner {
     Thread audioThread;
 
     private boolean isMuted = false;
+    private Context mContext;
 
     public TunerMode tunerMode;
 
@@ -52,6 +54,7 @@ public class Tuner {
 //    }
 
     public Tuner(Context context, TunerMode mode) {
+        mContext = context;
         init(mode);
     }
 
@@ -83,6 +86,8 @@ public class Tuner {
             }, "Tuner Thread");
             audioThread.start();
         }
+        Log.d("AUX_LOG", "Tuner: STARTED");
+
     }
 
     public void stop() {
@@ -96,6 +101,7 @@ public class Tuner {
             audioThread = null;
             onNoteFoundListener = null;
         }
+        Log.d("AUX_LOG", "Tuner: STOPPED");
 //        dispatcher = null;
 //        dispatcher.stop();
 //        dispatcher = null;
@@ -252,10 +258,12 @@ public class Tuner {
     }
 
     public void sendNullResult() {
-        TunerResult nullTunerResult = new TunerResult(0, tunerMode.getNotesObjects());
-        nullTunerResult.type = Indicator.INDICATOR_TYPE.INACTIVE;
-        nullTunerResult.percentage = 50f;
-        onNoteFoundListener.onEvent(nullTunerResult);
+        if(onNoteFoundListener != null) {
+            TunerResult nullTunerResult = new TunerResult(0, tunerMode.getNotesObjects());
+            nullTunerResult.type = Indicator.INDICATOR_TYPE.INACTIVE;
+            nullTunerResult.percentage = 50f;
+            onNoteFoundListener.onEvent(nullTunerResult);
+        }
     }
 
     public boolean isMuted() {
@@ -264,6 +272,35 @@ public class Tuner {
 
     public void setMuted(boolean muted) {
         isMuted = muted;
+    }
+
+    public static boolean checkIfMicrophoneIsAvailable(Context ctx){
+        AudioRecord audio = null;
+        boolean ready = true;
+        try{
+            int baseSampleRate = 44100;
+            int channel = AudioFormat.CHANNEL_IN_MONO;
+            int format = AudioFormat.ENCODING_PCM_16BIT;
+            int buffSize = AudioRecord.getMinBufferSize(baseSampleRate, channel, format );
+            audio = new AudioRecord(MediaRecorder.AudioSource.MIC, baseSampleRate, channel, format, buffSize );
+            audio.startRecording();
+            short buffer[] = new short[buffSize];
+            int audioStatus = audio.read(buffer, 0, buffSize);
+
+            if(audioStatus == AudioRecord.ERROR_INVALID_OPERATION || audioStatus == AudioRecord.STATE_UNINITIALIZED /* For Android 6.0 */)
+                ready = false;
+        }
+        catch(Exception e){
+            ready = false;
+        }
+        finally {
+            try{
+                audio.release();
+            }
+            catch(Exception e){}
+        }
+
+        return ready;
     }
 
     public void setOnNoteFoundListener(Tuner.OnNoteFoundListener eventListener) {

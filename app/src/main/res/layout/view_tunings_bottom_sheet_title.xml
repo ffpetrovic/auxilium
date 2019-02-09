@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAllCaps="true"
+    android:textColor="@color/colorTextSecondary"
+    android:textSize="12dp"
+    style="@style/AppTheme.BottomSheet.TextView"
+    android:fontFamily="@font/spacegrotesk_bold"
+    android:layout_marginTop="20dp"
+    android:letterSpacing="0.1"
+    android:layout_marginBottom="25dp"/>

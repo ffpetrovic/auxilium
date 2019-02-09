@@ -101,7 +101,7 @@ public class TunerResult {
 
     public int octave;
     public float frequency;
-    private float tolerance = .3f;
+    private float tolerance = .1f;
     public Indicator.INDICATOR_TYPE type;
 
     public TunerResult(double freq, Note[] notesMatch) {
@@ -158,7 +158,7 @@ public class TunerResult {
 
             this.frequency = (float) Math.round( freq * 100.00) / 100.00f;
         } else {
-            this.note = "-";
+            this.note = "";
             this.octave = 0;
             this.frequency = 0.0f;
 //            this.percentage = 50.0;

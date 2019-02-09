@@ -32,6 +32,8 @@ import com.filipetrovic.auxilium.databinding.ViewNoteSingleBinding;
 
 public class TunerModeListeningBlock extends LinearLayout {
 
+    public boolean isActive = true;
+
     public TunerModeListeningBlock(Context context) {
         super(context);
         init(null, 0);
@@ -70,6 +72,15 @@ public class TunerModeListeningBlock extends LinearLayout {
         if(d instanceof AnimatedVectorDrawable) {
             ((AnimatedVectorDrawable) d).stop();
             ((AnimatedVectorDrawable) d).registerAnimationCallback(null);
+        }
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+
+        if(isActive) {
+            startAnimation();
         }
     }
 }

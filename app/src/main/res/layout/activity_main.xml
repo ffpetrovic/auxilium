@@ -7,14 +7,17 @@
     android:orientation="vertical"
     style="@style/AppTheme.Activity"
     tools:context="com.filipetrovic.auxilium.MainActivity">
-
-
-    <fragment android:name="com.filipetrovic.auxilium.TunerView.TunerFragment"
-        android:id="@+id/tunerFragment"
-        android:layout_height="match_parent"
+    <FrameLayout
+        android:id="@+id/activity_main_fragment_placeholder"
         android:layout_width="match_parent"
-        tools:layout="@layout/fragment_tuner">
+        android:layout_height="match_parent">
+    </FrameLayout>
+    <!--<fragment android:name="com.filipetrovic.auxilium.TunerView.TunerFragment"-->
+        <!--android:id="@+id/tunerFragment"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_width="match_parent"-->
+        <!--tools:layout="@layout/fragment_tuner">-->
 
-    </fragment>
+    <!--</fragment>-->
 
 </LinearLayout>

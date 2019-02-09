@@ -8,6 +8,8 @@ import android.media.midi.MidiManager;
 import android.net.Uri;
 import android.util.Log;
 
+import com.filipetrovic.auxilium.Interface.INotePlayerFinished;
+
 import jm.JMC;
 import jm.music.data.Phrase;
 import jm.util.Play;
@@ -16,14 +18,15 @@ import jm.music.data.Note;
 
 
 
-public class NotePlayer {
+public class SoundPlayer {
     public ObservableField<String> currentNote = new ObservableField<>("");
-
     Context mContext;
     MediaPlayer mPlayer;
-    public NotePlayer(Context c) {
-        mContext = c;
 
+    INotePlayerFinished onNotePlayerFinished;
+
+    public SoundPlayer(Context c) {
+        mContext = c;
     }
 
     public void playNote(String note) {
@@ -43,11 +46,24 @@ public class NotePlayer {
             AssetFileDescriptor afd = mContext.getAssets()
                     .openFd("sounds/" + currentNote.get() + ".mp3");
             mPlayer = new MediaPlayer();
+            if(onNotePlayerFinished != null) {
+                onNotePlayerFinished.onEvent();
+            }
+            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    if(onNotePlayerFinished != null) {
+                        mediaPlayer.seekTo(0);
+                        mediaPlayer.start();
+                        onNotePlayerFinished.onEvent();
+                    }
+                }
+            });
             mPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
             afd.close();
             mPlayer.prepare();
             mPlayer.setVolume(1f, 1f);
-            mPlayer.setLooping(true);
+//            mPlayer.setLooping(true);
             mPlayer.start();
         } catch(Exception e) {
             Log.e("AUX_LOG", e.toString());
@@ -56,5 +72,9 @@ public class NotePlayer {
 
     public boolean isPlaying() {
         return !currentNote.get().equals("");
+    }
+
+    public void setOnNotePlayerFinished(INotePlayerFinished onNotePlayerFinished) {
+        this.onNotePlayerFinished = onNotePlayerFinished;
     }
 }
