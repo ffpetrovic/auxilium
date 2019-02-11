@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="android.view.View"/>
+        <import type="android.databinding.ObservableField"/>
         <variable
             name="result"
             type="String" />
@@ -11,10 +12,11 @@
             type="com.filipetrovic.auxilium.TunerUtils.Note" />
         <variable
             name="currentNotePlaying"
-            type="android.databinding.ObservableField&lt;String&gt;" />
+            type="ObservableField&lt;String&gt;" />
         <variable name="isInTune" type="android.databinding.ObservableBoolean"/>
     </data>
     <LinearLayout
+        android:orientation="horizontal"
         android:id="@+id/viewRoot"
         android:layout_width="32dp"
         android:layout_height="32dp"
@@ -45,7 +47,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{(!isInTune &amp;&amp; !result.equals(note.toString()) &amp;&amp; !currentNotePlaying.equals(note.toString())) ? View.VISIBLE : View.GONE}">
+            android:visibility="gone">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -70,7 +72,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{!isInTune &amp;&amp; result.equals(note.toString()) &amp;&amp; !currentNotePlaying.equals(note.toString()) ? View.VISIBLE : View.GONE}">
+            android:visibility="gone">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -92,7 +94,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{isInTune &amp;&amp; !result.equals(note.toString()) &amp;&amp; !currentNotePlaying.equals(note.toString()) ? View.VISIBLE : View.GONE}">
+            android:visibility="gone">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -115,7 +117,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{isInTune &amp;&amp; result.equals(note.toString()) &amp;&amp; !currentNotePlaying.equals(note.toString()) ? View.VISIBLE : View.GONE}">
+            android:visibility="gone">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
