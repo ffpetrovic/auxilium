@@ -30,7 +30,7 @@ public class TunerFragment extends Fragment {
     private TunerModesBottomSheet bottomSheet;
     private MainActivity activity;
 
-    private SoundPlayer notePlayer;
+    private SoundPlayer soundPlayer;
 
     INoteClickToPlayEvent noteClickToPlayEvent;
     DialogUnavailableMicrophone dialogUnavailableMicrophone;
@@ -44,7 +44,7 @@ public class TunerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        notePlayer = new SoundPlayer(getContext());
+        soundPlayer = new SoundPlayer(getContext());
         bottomSheet = new TunerModesBottomSheet();
 
         Log.d("AUX_LOG", "TunerFragment onCreate");
@@ -62,8 +62,9 @@ public class TunerFragment extends Fragment {
                 SharedPreferencesHelper.getSharedPreferenceString(getContext(), "selectedTunerMode", SharedPreferencesHelper.defaultTunerMode);
         TunerMode tunerMode = TunerMode.valueOf(tunerModeString);
         tuner = new Tuner(getContext(), tunerMode);
+        tuner.setSoundPlayer(soundPlayer);
         binding.setTuner(tuner);
-        binding.setCurrentNotePlaying(notePlayer.currentNote);
+        binding.setCurrentNotePlaying(soundPlayer.currentNote);
     }
 
     private void noteFound(final TunerResult note) {
@@ -71,7 +72,7 @@ public class TunerFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(!notePlayer.isPlaying()) {
+                    if(!soundPlayer.isPlaying()) {
                         binding.setResult(note);
 
 
@@ -115,7 +116,7 @@ public class TunerFragment extends Fragment {
             bottomSheet.dismiss();
         }
         if(tuner.isRecording) {
-            notePlayer.playNote("");
+            soundPlayer.playNote("");
             tuner.stop();
             tuner.destroy();
         }
@@ -189,23 +190,23 @@ public class TunerFragment extends Fragment {
             @Override
             public void onEvent(String note) {
                 tuner.sendNullResult();
-                notePlayer.playNote(note);
-                tuner.setMuted(notePlayer.isPlaying());
+                soundPlayer.playNote(note);
+                tuner.setMuted(soundPlayer.isPlayingNote());
             }
         };
 //        binding.viewCurrentNotePlayingIndicator.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                notePlayer.playNote("");
-//                tuner.setMuted(notePlayer.isPlaying());
+//                soundPlayer.playNote("");
+//                tuner.setMuted(soundPlayer.isPlaying());
 //            }
 //        });
         binding.notesCollectionBlock.setNoteClickToPlayEvent(noteClickToPlayEvent);
-        notePlayer.setOnNotePlayerFinished(new INotePlayerFinished() {
+        soundPlayer.setOnNotePlayerFinished(new INotePlayerFinished() {
             @Override
             public void onEvent() {
                 binding.tunerPlayingBlock.stopAnimation();
-                if(notePlayer.isPlaying()) {
+                if(soundPlayer.isPlaying()) {
                     binding.tunerPlayingBlock.startAnimation();
                 }
             }
@@ -213,7 +214,8 @@ public class TunerFragment extends Fragment {
         binding.tunerPlayingBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                notePlayer.playNote("");
+                soundPlayer.playNote("");
+                tuner.setMuted(false);
             }
         });
     }
@@ -250,6 +252,10 @@ public class TunerFragment extends Fragment {
             // Checking if the input is already occupied by another app.
             setupUI();
             start();
+
+            // Uncomment to player SFX on app start
+            // soundPlayer.playSfxOnStart();
+
             if(dialogUnavailableMicrophone != null && dialogUnavailableMicrophone.isVisible()) {
                 // Closing the dialog if it's visible and the input is available.
                 dialogUnavailableMicrophone.dismiss();
@@ -263,7 +269,7 @@ public class TunerFragment extends Fragment {
             TunerResult fakeTunerResult =
                     new TunerResult(0.00, tuner.tunerMode.getNotesObjects());
             binding.setResult(fakeTunerResult);
-            binding.setCurrentNotePlaying(notePlayer.currentNote);
+            binding.setCurrentNotePlaying(soundPlayer.currentNote);
 
             if(dialogUnavailableMicrophone == null) {
                 Log.d("AUX_LOG", "DIALOG IS NULL");

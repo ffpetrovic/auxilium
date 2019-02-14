@@ -6,6 +6,8 @@ import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.util.Log;
 
 import com.filipetrovic.auxilium.TunerView.Indicator;
@@ -38,11 +40,14 @@ public class Tuner {
     private TunerResult prevNoteResult;
     private OnNoteFoundListener onNoteFoundListener;
     Thread audioThread;
+    private SoundPlayer soundPlayer;
 
     private boolean isMuted = false;
     private Context mContext;
 
     public TunerMode tunerMode;
+
+    private boolean playedSfx = false;
 
     static {
         System.loadLibrary("aubio");
@@ -125,7 +130,6 @@ public class Tuner {
 
                         if(getType() == Indicator.INDICATOR_TYPE.CORRECT && !tunerMode.isChromatic()) {
                             tunerMode.setInTune(result.getNoteLabelWithAugAndOctave());
-
                         }
 
 
@@ -136,6 +140,19 @@ public class Tuner {
                                         (result.note + result.octave).equals(getNote())) {
                             currentNoteResult = result;
                             onNoteFoundListener.onEvent(result);
+                            if(getType() == Indicator.INDICATOR_TYPE.CORRECT) {
+                                if(!playedSfx && soundPlayer != null) {
+                                    soundPlayer.playSfxCorrectResult();
+                                    playedSfx = true;
+                                    new android.os.Handler().postDelayed(
+                                            new Runnable() {
+                                                public void run() {
+                                                    playedSfx = false;
+                                                }
+                                            },
+                                            3000);
+                                }
+                            }
                             if(result.type != Indicator.INDICATOR_TYPE.INACTIVE)
                                 prevNoteResult = result;
                         }
@@ -301,6 +318,10 @@ public class Tuner {
         }
 
         return ready;
+    }
+
+    public void setSoundPlayer(SoundPlayer soundPlayer) {
+        this.soundPlayer = soundPlayer;
     }
 
     public void setOnNoteFoundListener(Tuner.OnNoteFoundListener eventListener) {

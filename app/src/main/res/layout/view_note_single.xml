@@ -47,7 +47,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:visibility="@{(!isInTune &amp;&amp; !result.equals(note.toString()) &amp;&amp; !currentNotePlaying.equals(note.toString())) ? View.VISIBLE : View.GONE}">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -72,7 +72,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:visibility="@{!isInTune &amp;&amp; result.equals(note.toString()) &amp;&amp; !currentNotePlaying.equals(note.toString()) ? View.VISIBLE : View.GONE}">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -94,7 +94,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:visibility="@{isInTune &amp;&amp; !result.equals(note.toString()) &amp;&amp; !currentNotePlaying.equals(note.toString()) ? View.VISIBLE : View.GONE}">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -117,7 +117,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:visibility="@{isInTune &amp;&amp; result.equals(note.toString()) &amp;&amp; !currentNotePlaying.equals(note.toString()) ? View.VISIBLE : View.GONE}">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
