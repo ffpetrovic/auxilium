@@ -18,9 +18,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline2">
+        android:layout_height="match_parent">
 
 
         <ImageView
@@ -138,6 +136,8 @@
             android:gravity="center"
             app:currentNotePlaying="@{currentNotePlaying}"
             app:isTunerResultVisible="@{result.isEmpty() &amp;&amp; !currentNotePlaying.equals(``)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/tunerLine"
             app:layout_constraintTop_toTopOf="@+id/tunerLine" />
 
