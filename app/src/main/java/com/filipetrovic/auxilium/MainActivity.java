@@ -25,6 +25,8 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     TunerFragment tunerFragment;
+    TunerModesDialog tunerModesDialog;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO},
                     11);
         }
+
+//        tunerFragment = new TunerFragment();
+//        tunerModesDialog = new TunerModesDialog();
+
         displayTunerFragment();
 //        tunerFragment = (TunerFragment) getSupportFragmentManager()
 //                .findFragmentById(R.id.tunerFragment);

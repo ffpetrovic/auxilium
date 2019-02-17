@@ -27,7 +27,6 @@ public class TunerFragment extends Fragment {
     private Tuner tuner;
     private FragmentTunerBinding binding;
     private float pPerc;
-    private TunerModesBottomSheet bottomSheet;
     private MainActivity activity;
 
     private SoundPlayer soundPlayer;
@@ -45,7 +44,6 @@ public class TunerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         soundPlayer = new SoundPlayer(getContext());
-        bottomSheet = new TunerModesBottomSheet();
 
         Log.d("AUX_LOG", "TunerFragment onCreate");
 
@@ -112,9 +110,6 @@ public class TunerFragment extends Fragment {
     }
 
     public void stop() {
-        if(bottomSheet.isVisible()) {
-            bottomSheet.dismiss();
-        }
         if(tuner.isRecording) {
             soundPlayer.playNote("");
             tuner.stop();
@@ -305,7 +300,7 @@ public class TunerFragment extends Fragment {
                 view.isActive = false;
                 view.clearAnimation();
                 view.animate().alpha(0f).setDuration(0);
-                view.setVisibility(View.GONE);
+                view.setVisibility(View.INVISIBLE);
             }
         }
         if(v.getId() == R.id.tunerPlayingBlock) {
@@ -339,7 +334,7 @@ public class TunerFragment extends Fragment {
 
                     @Override
                     public void onAnimationEnd(Animator animator) {
-                        view.setVisibility(View.GONE);
+                        view.setVisibility(View.INVISIBLE);
                     }
 
                     @Override

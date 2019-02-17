@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -58,11 +59,31 @@ public class TunerModesDialog extends Fragment {
 
     private MainActivity activity;
 
+    private View rootView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.view_tunings_bottom_sheet, container, false);
+        this.rootView = root;
+        inflateScreen(root, inflater);
+        return root;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+//        inflateScreen(view, getLayoutInflater());
+        for(int i = 0; i < tunings.size(); i++) {
+            if(tunings.get(i).equals(SharedPreferencesHelper.getSharedPreferenceString(view.getContext(), "selectedTunerMode", SharedPreferencesHelper.defaultTunerMode))) {
+                tuningActiveIndicators.get(i).setVisibility(View.VISIBLE);
+            } else {
+                tuningActiveIndicators.get(i).setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+    void inflateScreen(View root, LayoutInflater inflater) {
         JSONObject mainObject = null;
         try {
             mainObject = new JSONObject(tuningsJson);
@@ -90,28 +111,13 @@ public class TunerModesDialog extends Fragment {
         root.findViewById(R.id.buttonClose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                activity.displayTunerFragment();
+                activity.displayTunerFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 if (fragmentManager.getBackStackEntryCount() > 0) {
                     fragmentManager.popBackStack();
                 }
             }
         });
-
-        return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        for(int i = 0; i < tunings.size(); i++) {
-            if(tunings.get(i).equals(SharedPreferencesHelper.getSharedPreferenceString(view.getContext(), "selectedTunerMode", SharedPreferencesHelper.defaultTunerMode))) {
-                tuningActiveIndicators.get(i).setVisibility(View.VISIBLE);
-            } else {
-                tuningActiveIndicators.get(i).setVisibility(View.INVISIBLE);
-            }
-        }
     }
 
     void addTitleView(String title, View r, LayoutInflater inflater) {
