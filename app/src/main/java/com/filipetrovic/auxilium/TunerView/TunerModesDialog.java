@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,6 +37,10 @@ import com.filipetrovic.auxilium.BR;
 import com.filipetrovic.auxilium.Interface.INoteClickToPlayEvent;
 import com.filipetrovic.auxilium.MainActivity;
 import com.filipetrovic.auxilium.R;
+import com.filipetrovic.auxilium.TunerMode.ITunerModeListItem;
+import com.filipetrovic.auxilium.TunerMode.TunerModeArrayAdapter;
+import com.filipetrovic.auxilium.TunerMode.TunerModeListHeader;
+import com.filipetrovic.auxilium.TunerMode.TunerModeListItem;
 import com.filipetrovic.auxilium.TunerUtils.Note;
 import com.filipetrovic.auxilium.TunerUtils.TunerMode;
 import com.filipetrovic.auxilium.Utils.CustomFontHelper;
@@ -74,16 +79,17 @@ public class TunerModesDialog extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 //        inflateScreen(view, getLayoutInflater());
-        for(int i = 0; i < tunings.size(); i++) {
-            if(tunings.get(i).equals(SharedPreferencesHelper.getSharedPreferenceString(view.getContext(), "selectedTunerMode", SharedPreferencesHelper.defaultTunerMode))) {
-                tuningActiveIndicators.get(i).setVisibility(View.VISIBLE);
-            } else {
-                tuningActiveIndicators.get(i).setVisibility(View.INVISIBLE);
-            }
-        }
+//        for(int i = 0; i < tunings.size(); i++) {
+//            if(tunings.get(i).equals(SharedPreferencesHelper.getSharedPreferenceString(view.getContext(), "selectedTunerMode", SharedPreferencesHelper.defaultTunerMode))) {
+//                tuningActiveIndicators.get(i).setVisibility(View.VISIBLE);
+//            } else {
+//                tuningActiveIndicators.get(i).setVisibility(View.INVISIBLE);
+//            }
+//        }
     }
 
     void inflateScreen(View root, LayoutInflater inflater) {
+        List<ITunerModeListItem> items = new ArrayList<ITunerModeListItem>();
         JSONObject mainObject = null;
         try {
             mainObject = new JSONObject(tuningsJson);
@@ -93,20 +99,23 @@ public class TunerModesDialog extends Fragment {
                 String tuningsGroupTitle = tuningsGroup.getString("groupName");
                 JSONArray tunings = tuningsGroup.getJSONArray("groupTunings");
 
-                addTitleView(tuningsGroupTitle, root.findViewById(R.id.tuningsInnerWrapper),inflater);
+                items.add(new TunerModeListHeader(tuningsGroupTitle));
                 for(int j = 0; j < tunings.length(); j++) {
                     JSONObject tuning = tunings.getJSONObject(j);
                     TunerMode mode = new TunerMode();
                     mode.setName(tuning.getString("tuningName"));
                     mode.setNotes(tuning.getString("tuningNotes"));
                     mode.setGroup(tuningsGroupTitle);
-                    addTuningsItemView(mode, root.findViewById(R.id.tuningsInnerWrapper),inflater);
+                    items.add(new TunerModeListItem(mode));
                 }
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        TunerModeArrayAdapter adapter = new TunerModeArrayAdapter(getContext(), items);
+        ((ListView) root.findViewById(R.id.modesList)).setAdapter(adapter);
 
         root.findViewById(R.id.buttonClose).setOnClickListener(new View.OnClickListener() {
             @Override
