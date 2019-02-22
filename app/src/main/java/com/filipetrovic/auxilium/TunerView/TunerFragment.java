@@ -24,6 +24,13 @@ import com.filipetrovic.auxilium.Utils.SharedPreferencesHelper;
 import com.filipetrovic.auxilium.databinding.FragmentTunerBinding;
 
 public class TunerFragment extends Fragment {
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d("AUX_LOG", "onResume()");
+    }
+
     private Tuner tuner;
     private FragmentTunerBinding binding;
     private float pPerc;
@@ -167,7 +174,7 @@ public class TunerFragment extends Fragment {
                 // and on other lifecycle events. See TunerModesBottomSheet.java for usage.
                 // Resorting to a static full-screen modal type of view.
 //                binding.tunerModesDialog.showDialog();
-                activity.displayTunerModesFragment();
+                activity.showTunerModesFragment();
 //                bottomSheet.show(getFragmentManager(), "tunerModesBottomSheet");
 //                bottomSheet.setBottomSheetListener(new TunerModesBottomSheet.BottomSheetListener() {
 //                    @Override
@@ -242,13 +249,13 @@ public class TunerFragment extends Fragment {
         stop();
     }
 
-    private void startAttempt() {
+    public void startAttempt() {
         if(Tuner.checkIfMicrophoneIsAvailable(getContext())) {
             // Checking if the input is already occupied by another app.
             setupUI();
             start();
 
-            // Uncomment to player SFX on app start
+            // Uncomment to play SFX on app start
             // soundPlayer.playSfxOnStart();
 
             if(dialogUnavailableMicrophone != null && dialogUnavailableMicrophone.isVisible()) {
@@ -319,7 +326,7 @@ public class TunerFragment extends Fragment {
                 view.setVisibility(View.GONE);
             }
         }
-        if(v.getId() == R.id.tunerMainTextWrapper) {
+        if(v.getId() == R.id.tvNote || v.getId() == R.id.tvOctave || v.getId() == R.id.tvNoteSharp) {
             final View view = v;
             if(isActive) {
                 view.setVisibility(View.VISIBLE);

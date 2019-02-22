@@ -3,8 +3,12 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginBottom="18dp"
-    android:gravity="center">
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:gravity="center"
+    android:background="@drawable/rect_selector">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -18,7 +22,8 @@
             style="@style/AppTheme.BottomSheet.TextView"
             android:textColor="@color/colorWhite"
             android:textSize="16dp"
-            android:fontFamily="@font/spacegrotesk_bold"/>
+            android:fontFamily="@font/spacegrotesk_bold"
+            android:text="placeholder string"/>
         <TextView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
@@ -27,7 +32,8 @@
             style="@style/AppTheme.BottomSheet.TextView"
             android:textColor="@color/colorTextSecondary"
             android:textSize="14dp"
-            android:fontFamily="@font/spacegrotesk_semibold" />
+            android:fontFamily="@font/spacegrotesk_semibold"
+            android:text="placeholder string"/>
     </LinearLayout>
     <ImageView
         android:layout_width="18dp"

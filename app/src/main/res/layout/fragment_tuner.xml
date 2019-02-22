@@ -97,7 +97,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_flat" />
+            app:srcCompat="@drawable/ic_sharp" />
 
         <ImageView
             android:id="@+id/imageView4"
@@ -110,7 +110,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tunerListeningBlock"
-            app:srcCompat="@drawable/ic_sharp" />
+            app:srcCompat="@drawable/ic_flat" />
 
         <com.filipetrovic.auxilium.TunerView.TunerModeListeningBlock
             android:id="@+id/tunerListeningBlock"
@@ -182,23 +182,23 @@
                 android:textSize="16dp" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/spacegrotesk_bold"
-                android:gravity="center"
-                android:text="@{String.valueOf(result.getFrequencyLabel())}"
-                android:textSize="16dp" />
-
-            <TextView
                 android:id="@+id/navigationBlockPercentageTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:alpha=".3"
                 android:fontFamily="@font/spacegrotesk_bold"
-                android:gravity="end"
+                android:gravity="center"
                 android:text="@{String.valueOf(result.getPercentageLabel())}"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/spacegrotesk_bold"
+                android:gravity="end"
+                android:text="@{String.valueOf(result.getFrequencyLabel())}"
                 android:textSize="16dp" />
         </LinearLayout>
 
@@ -294,7 +294,6 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="64dp"
             android:layout_marginBottom="60dp"
-            app:isTunerResultVisible="@{!result.isEmpty() &amp;&amp; currentNotePlaying.equals(``)}"
             app:layout_constraintBottom_toTopOf="@+id/navigation_block_automatic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -309,7 +308,8 @@
                 android:fontFamily="@font/spacegrotesk_regular"
                 android:text="@{result.getNoteLabel()}"
                 android:textColor="#535353"
-                android:textSize="128dp" />
+                android:textSize="128dp"
+                app:isTunerResultVisible="@{!result.isEmpty() &amp;&amp; currentNotePlaying.equals(``)}" />
 
             <TextView
                 android:id="@+id/tvNoteSharp"
@@ -321,7 +321,8 @@
                 android:fontFamily="@font/spacegrotesk_medium"
                 android:text="@{result.getNoteAug()}"
                 android:textColor="#535353"
-                android:textSize="36dp" />
+                android:textSize="36dp"
+                app:isTunerResultVisible="@{!result.isEmpty() &amp;&amp; currentNotePlaying.equals(``)}"/>
 
             <TextView
                 android:id="@+id/tvOctave"
@@ -334,7 +335,8 @@
                 android:fontFamily="@font/spacegrotesk_semibold"
                 android:text="@{result.getOctaveLabel()}"
                 android:textColor="#535353"
-                android:textSize="32dp" />
+                android:textSize="48dp"
+                app:isTunerResultVisible="@{!result.isEmpty() &amp;&amp; currentNotePlaying.equals(``)}"/>
         </RelativeLayout>
 
         <com.filipetrovic.auxilium.TunerView.TunerView

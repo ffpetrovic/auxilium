@@ -47,15 +47,14 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/modesList"
+        <LinearLayout
+            android:id="@+id/tuningsInnerWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp">
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
-        </ListView>
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
 </LinearLayout>
