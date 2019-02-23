@@ -91,7 +91,7 @@ public class TunerFragment extends Fragment {
                         } else if(note.type == Indicator.INDICATOR_TYPE.INACTIVE) {
                             statusText = "...";
                         } else if(note.type == Indicator.INDICATOR_TYPE.INCORRECT) {
-                            statusText = "Off by " + Math.abs(50.00 - note.getPercentageActual()) + "%";
+                            statusText = "Off by " + Math.abs(50 - Math.round(note.getPercentageActual())) + "%";
                         }
                         (binding.tunerStatus).setText(statusText);
     //

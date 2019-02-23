@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.add(R.id.activity_main_fragment_placeholder, tunerFragment);
-        ft.addToBackStack("tunerFragment");
         ft.commit();
     }
 

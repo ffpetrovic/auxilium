@@ -161,46 +161,95 @@
         <!--android:text="Button" />-->
 
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:id="@+id/tunerBlockSpecificDetails"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="0dp"
             android:layout_weight="0"
             android:gravity="center_vertical"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
             android:visibility="@{tuner.tunerMode.isChromatic() ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@+id/navigation_block_automatic">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="40dp"
                 android:fontFamily="@font/spacegrotesk_bold"
                 android:text="@{result.getNoteLabelWithAug() + String.valueOf(result.getOctaveLabel())}"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:tint="@color/colorGreen"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_check_circle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="@{result.isCorrect() ? View.VISIBLE : View.INVISIBLE}"/>
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:tint="@color/colorWhite"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_arrow_up"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="10dp"
+                android:alpha="@{result.getPercentageLabel() &gt; 0 ? 1f : .3f}"
+                app:layout_constraintEnd_toStartOf="@+id/navigationBlockPercentageTextView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="@{(result.isValid() &amp;&amp; !tuner.hasCorrectResult) ? View.VISIBLE : View.INVISIBLE}"/>
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:tint="@color/colorWhite"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_arrow_down"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:alpha="@{result.getPercentageLabel() &lt; 0 ? 1f : .3f}"
+                app:layout_constraintEnd_toStartOf="@+id/navigationBlockPercentageTextView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="@{(result.isValid() &amp;&amp; !tuner.hasCorrectResult) ? View.VISIBLE : View.INVISIBLE}"/>
 
             <TextView
                 android:id="@+id/navigationBlockPercentageTextView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="30dp"
                 android:alpha=".3"
                 android:fontFamily="@font/spacegrotesk_bold"
-                android:gravity="center"
-                android:text="@{String.valueOf(result.getPercentageLabel())}"
-                android:textSize="16dp" />
+                android:text="@{String.valueOf(Math.abs(result.getPercentageLabel()))}"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="@{(result.isValid() &amp;&amp; !tuner.hasCorrectResult) ? View.VISIBLE : View.INVISIBLE}"/>
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:fontFamily="@font/spacegrotesk_bold"
                 android:gravity="end"
                 android:text="@{String.valueOf(result.getFrequencyLabel())}"
-                android:textSize="16dp" />
-        </LinearLayout>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="40dp"
+                android:textSize="16dp"
+                android:visibility="@{result.isValid() ? View.VISIBLE : View.INVISIBLE}"/>
+        </android.support.constraint.ConstraintLayout>
 
 
         <com.filipetrovic.auxilium.TunerView.TunerNotesCollectionBlock

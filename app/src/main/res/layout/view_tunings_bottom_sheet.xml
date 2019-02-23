@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:textStyle="bold"
             android:layout_weight="1"
-            android:text="Tuner Mode"
+            android:text="Pick tuner mode:"
             android:fontFamily="@font/spacegrotesk_bold"
             android:textSize="20dp"
             android:layout_marginLeft="30dp"

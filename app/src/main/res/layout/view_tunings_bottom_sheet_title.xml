@@ -8,7 +8,9 @@
     android:textColor="@color/colorTextSecondary"
     android:textSize="12dp"
     style="@style/AppTheme.BottomSheet.TextView"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:fontFamily="@font/spacegrotesk_bold"
     android:layout_marginTop="20dp"
     android:letterSpacing="0.1"
-    android:layout_marginBottom="25dp"/>
+    android:layout_marginBottom="15dp"/>

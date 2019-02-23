@@ -1,6 +1,7 @@
 package com.filipetrovic.auxilium.TunerUtils;
 
 import android.content.Context;
+import android.databinding.ObservableBoolean;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -48,6 +49,9 @@ public class Tuner {
     public TunerMode tunerMode;
 
     private boolean playedSfx = false;
+
+    public ObservableBoolean hasValidResult = new ObservableBoolean(false);
+    public ObservableBoolean hasCorrectResult = new ObservableBoolean(false);
 
     static {
         System.loadLibrary("aubio");
@@ -128,10 +132,15 @@ public class Tuner {
                         pushNote(result.note + result.octave);
                         result.type = getType();
 
+                        hasValidResult.set(result.frequency > -1);
+                        hasCorrectResult.set(getType() == Indicator.INDICATOR_TYPE.CORRECT);
+
+                        Log.d("AUX_LOG", "valid: " + (getType() != Indicator.INDICATOR_TYPE.INACTIVE));
+                        Log.d("AUX_LOG", "correct: " + hasCorrectResult.get());
+
                         if(getType() == Indicator.INDICATOR_TYPE.CORRECT && !tunerMode.isChromatic()) {
                             tunerMode.setInTune(result.getNoteLabelWithAugAndOctave());
                         }
-
 
                         if(
                                 !(tempType == Indicator.INDICATOR_TYPE.INACTIVE &&
