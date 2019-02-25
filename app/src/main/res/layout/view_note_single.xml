@@ -39,7 +39,7 @@
                 android:fontFamily="@font/spacegrotesk_bold"
                 android:gravity="center"
                 android:textSize="16dp"
-                android:textColor="@color/colorGreen"
+                android:textColor="@color/colorWhite"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:text="@{note.note}" />
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha=".15"
-                android:tint="@color/colorWhite"
+                android:tint="@color/colorPrimary"
                 android:src="@drawable/ic_note_circle_bg" />
             <TextView
                 android:layout_width="wrap_content"
@@ -61,6 +61,7 @@
                 android:fontFamily="@font/spacegrotesk_medium"
                 android:gravity="center"
                 android:textSize="16dp"
+                android:alpha="0.3"
                 android:textColor="@color/colorWhite"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
@@ -82,10 +83,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/spacegrotesk_medium"
+                android:fontFamily="@font/spacegrotesk_semibold"
                 android:gravity="center"
                 android:textSize="16dp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorWhite"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:text="@{note.note}" />
@@ -107,6 +108,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/spacegrotesk_bold"
                 android:gravity="center"
+                android:alpha="0.6"
                 android:textSize="16dp"
                 android:textColor="@color/colorGreen"
                 android:layout_centerVertical="true"
@@ -130,7 +132,7 @@
                 android:fontFamily="@font/spacegrotesk_bold"
                 android:gravity="center"
                 android:textSize="16dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorGreen"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:text="@{note.note}" />

@@ -35,6 +35,7 @@ import android.widget.TextView;
 import com.filipetrovic.auxilium.BR;
 import com.filipetrovic.auxilium.Interface.INoteClickToPlayEvent;
 import com.filipetrovic.auxilium.MainActivity;
+import com.filipetrovic.auxilium.ModesActivity;
 import com.filipetrovic.auxilium.R;
 import com.filipetrovic.auxilium.TunerUtils.Note;
 import com.filipetrovic.auxilium.TunerUtils.TunerMode;
@@ -115,10 +116,7 @@ public class TunerModesDialog extends Fragment {
         root.findViewById(R.id.buttonClose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getFragmentManager();
-                if (fragmentManager.getBackStackEntryCount() > 0) {
-                    fragmentManager.popBackStack();
-                }
+                getActivity().finish();
             }
         });
     }
@@ -147,11 +145,7 @@ public class TunerModesDialog extends Fragment {
             @Override
             public void onClick(View view) {
                 SharedPreferencesHelper.setSharedPreferenceString(r.getContext(), "selectedTunerMode", mode.toString());
-                FragmentManager fragmentManager = getFragmentManager();
-                if (fragmentManager.getBackStackEntryCount() > 0) {
-                    fragmentManager.popBackStack();
-                }
-//                activity.displayTunerFragment();
+                getActivity().finish();
             }
         });
 
@@ -163,15 +157,11 @@ public class TunerModesDialog extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof AppCompatActivity){
-            this.activity = (MainActivity) context;
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        this.activity = null;
     }
 
     //    public void showDialog() {
@@ -218,7 +208,6 @@ public class TunerModesDialog extends Fragment {
 
     @Override
     public void onPause() {
-        ((MainActivity) getActivity()).startAttemptTuner();
         super.onPause();
     }
 

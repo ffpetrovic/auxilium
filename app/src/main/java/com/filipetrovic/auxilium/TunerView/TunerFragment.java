@@ -174,7 +174,7 @@ public class TunerFragment extends Fragment {
                 // and on other lifecycle events. See TunerModesBottomSheet.java for usage.
                 // Resorting to a static full-screen modal type of view.
 //                binding.tunerModesDialog.showDialog();
-                activity.showTunerModesFragment();
+                activity.showTunerModes();
 //                bottomSheet.show(getFragmentManager(), "tunerModesBottomSheet");
 //                bottomSheet.setBottomSheetListener(new TunerModesBottomSheet.BottomSheetListener() {
 //                    @Override

@@ -254,17 +254,21 @@
 
         <com.filipetrovic.auxilium.TunerView.TunerNotesCollectionBlock
             android:id="@+id/notesCollectionBlock"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:layout_marginBottom="10dp"
             android:visibility="@{!tuner.tunerMode.isChromatic() ? View.VISIBLE : View.GONE}"
             app:currentNote="@{result.getNoteLabelWithAugAndOctave()}"
             app:currentNotePlaying="@{currentNotePlaying}"
             app:layout_constraintBottom_toTopOf="@+id/navigation_block_automatic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/collection_block_bg"
             app:notes="@{tuner.tunerMode.getNotesObjectsForGroup()}" />
 
 
@@ -315,6 +319,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:nbGroupText="@{``}"
             app:nbImage="@{@drawable/ic_mode_automatic}"
+            app:nbImageActive="@{@drawable/ic_mode_automatic_active}"
             app:nbIsActive="@{tuner.tunerMode.isChromatic()}"
             app:nbText="@{`Automatic`}" />
 
@@ -329,7 +334,8 @@
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/navigation_block_automatic"
             app:nbGroupText="@{tuner.tunerMode.group}"
-            app:nbImage="@{@drawable/ic_mode_pick_arrow}"
+            app:nbImage="@{@drawable/ic_mode_pick}"
+            app:nbImageActive="@{@drawable/ic_mode_pick_active}"
             app:nbIsActive="@{!tuner.tunerMode.isChromatic()}"
             app:nbText="@{tuner.tunerMode.isChromatic() ? `Pick Mode` : tuner.tunerMode.name}" >
 

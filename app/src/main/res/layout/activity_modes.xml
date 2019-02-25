@@ -4,13 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    style="@style/AppTheme.Activity"
-    tools:context="com.filipetrovic.auxilium.MainActivity">
+    tools:context=".ModesActivity">
 
     <fragment
         android:id="@+id/fragment_tuner_view"
-        android:name="com.filipetrovic.auxilium.TunerView.TunerFragment"
+        android:name="com.filipetrovic.auxilium.TunerView.TunerModesDialog"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

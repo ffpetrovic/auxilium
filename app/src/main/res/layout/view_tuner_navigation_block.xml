@@ -5,15 +5,15 @@
     android:layout_width="0dp"
     android:layout_height="match_parent"
     android:layout_weight="1"> <!-- Navigation Block -->
-    <ImageView
-        android:id="@+id/navigationBlockActiveIndicator"
-        android:layout_width="40dp"
-        android:layout_height="6dp"
-        android:tint="@color/colorWhite"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/ic_view_active_indicator"
-        android:layout_marginBottom="-3dp"/>
+    <!--<ImageView-->
+        <!--android:id="@+id/navigationBlockActiveIndicator"-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="6dp"-->
+        <!--android:tint="@color/colorWhite"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--app:srcCompat="@drawable/ic_view_active_indicator"-->
+        <!--android:layout_marginBottom="-3dp"/>-->
     <LinearLayout
         android:id="@+id/navigationBlockRoot"
         android:layout_width="wrap_content"
@@ -25,9 +25,8 @@
         <ImageView
             android:id="@+id/navigationBlockImage"
             android:layout_gravity="start|center_vertical"
-            android:layout_width="24dp"
+            android:layout_width="28dp"
             android:layout_height="32dp"
-            android:tint="@color/colorWhite"
             android:scaleType="fitCenter"
             app:srcCompat="@android:color/transparent" />
 

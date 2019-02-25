@@ -1,6 +1,7 @@
 package com.filipetrovic.auxilium;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.support.v4.app.FragmentTransaction;
@@ -28,32 +29,11 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO},
                     11);
         }
-
-        tunerFragment = new TunerFragment();
-        tunerModesDialog = new TunerModesDialog();
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-        ft.add(R.id.activity_main_fragment_placeholder, tunerFragment);
-        ft.commit();
     }
 
-    public void showTunerModesFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.anim.slide_in_down, android.R.anim.fade_out, android.R.anim.fade_in, R.anim.slide_out_down);
-        if(tunerModesDialog.isAdded()) {
-            ft.show(tunerModesDialog);
-        } else {
-            ft.add(R.id.activity_main_modes_placeholder, tunerModesDialog);
-        }
-
-        if(tunerFragment.isAdded()) {
-            ft.hide(tunerFragment);
-            tunerFragment.stop();
-        }
-
-        ft.addToBackStack("tunerModes");
-        ft.commit();
+    public void showTunerModes() {
+        Intent intent = new Intent(this, ModesActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -75,9 +55,5 @@ public class MainActivity extends AppCompatActivity {
         window.setFlags(WindowManager.LayoutParams.FLAG_DITHER, WindowManager.LayoutParams.FLAG_DITHER);
         window.setFormat(PixelFormat.RGBA_8888);
         window.setFormat(PixelFormat.TRANSLUCENT);
-    }
-
-    public void startAttemptTuner() {
-        tunerFragment.startAttempt();
     }
 }
