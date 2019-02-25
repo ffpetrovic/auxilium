@@ -22,7 +22,7 @@
             style="@style/AppTheme.BottomSheet.TextView"
             android:textColor="@color/colorWhite"
             android:textSize="16dp"
-            android:fontFamily="@font/spacegrotesk_bold"
+            android:fontFamily="@font/spacegrotesk_medium"
             android:text="placeholder string"/>
         <TextView
             xmlns:android="http://schemas.android.com/apk/res/android"

@@ -5,6 +5,7 @@ import android.databinding.ObservableBoolean;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.media.audiofx.NoiseSuppressor;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceActivity;
@@ -42,6 +43,7 @@ public class Tuner {
     private OnNoteFoundListener onNoteFoundListener;
     Thread audioThread;
     private SoundPlayer soundPlayer;
+    private NoiseSuppressor suppressor;
 
     private boolean isMuted = false;
     private Context mContext;
@@ -85,6 +87,9 @@ public class Tuner {
             initPitch(sampleRate, bufferSize);
             audioRecord = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, sampleRate, AudioFormat.CHANNEL_IN_DEFAULT,
                     AudioFormat.ENCODING_PCM_16BIT, bufferSize);
+            if(NoiseSuppressor.isAvailable()) {
+                suppressor = NoiseSuppressor.create(audioRecord.getAudioSessionId());
+            }
             audioRecord.startRecording();
             audioThread = new Thread(new Runnable() {
                 //Runs off the UI thread
@@ -95,7 +100,6 @@ public class Tuner {
             }, "Tuner Thread");
             audioThread.start();
         }
-        Log.d("AUX_LOG", "Tuner: STARTED");
 
     }
 
@@ -109,6 +113,10 @@ public class Tuner {
             audioRecord = null;
             audioThread = null;
             onNoteFoundListener = null;
+            if(suppressor != null) {
+                suppressor.release();
+                suppressor = null;
+            }
         }
         Log.d("AUX_LOG", "Tuner: STOPPED");
 //        dispatcher = null;
@@ -165,15 +173,8 @@ public class Tuner {
                             if(result.type != Indicator.INDICATOR_TYPE.INACTIVE)
                                 prevNoteResult = result;
                         }
-
-                        // Passing the previous successful result, as long as it's not -1
-                        // because otherwise, the tuner would pick up very little sound
-//                    if(!(result.note + result.octave).equals(getNote())
-//                            && prevNoteResult != null && onNoteFoundListener != null && !getNote().equals("00")) {
-//                        onNoteFoundListener.onEvent(prevNoteResult);
-//                    }
-//                    if(onNoteFoundListener != null)
-//                        onNoteFoundListener.onEvent(result);
+//                        if(onNoteFoundListener != null)
+//                            onNoteFoundListener.onEvent(result);
                     }
                 });
             }

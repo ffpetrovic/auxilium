@@ -29,7 +29,7 @@
             android:textStyle="bold"
             android:layout_weight="1"
             android:text="Pick tuner mode:"
-            android:fontFamily="@font/spacegrotesk_bold"
+            android:fontFamily="@font/spacegrotesk_medium"
             android:textSize="20dp"
             android:layout_marginLeft="30dp"
             android:gravity="center_vertical"
