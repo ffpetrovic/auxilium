@@ -3,6 +3,7 @@ package com.filipetrovic.auxilium.TunerView;
 import android.animation.Animator;
 import android.content.Context;
 import android.databinding.BindingAdapter;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import com.filipetrovic.auxilium.Interface.INoteClickToPlayEvent;
 import com.filipetrovic.auxilium.Interface.INotePlayerFinished;
@@ -134,6 +136,38 @@ public class TunerFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentTunerBinding.inflate(inflater, container, false);
 
+
+
+        binding.menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View popupView = layoutInflater.inflate(R.layout.popup_menu, null);
+
+
+                View settingsItem = popupView.findViewById(R.id.menu_item_settings);
+                // Do your customised stuff
+
+                PopupWindow popupWindow = new PopupWindow(
+                        popupView,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow.setOutsideTouchable(true);
+//                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//                    @Override
+//                    public void onDismiss() {
+//                    }
+//                });
+                settingsItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((MainActivity) getActivity()).openSettings();
+                    }
+                });
+                popupWindow.showAsDropDown(binding.menuButton, 1000, -1000);
+            }
+        });
+
         return binding.getRoot();
     }
 
@@ -174,7 +208,7 @@ public class TunerFragment extends Fragment {
                 // and on other lifecycle events. See TunerModesBottomSheet.java for usage.
                 // Resorting to a static full-screen modal type of view.
 //                binding.tunerModesDialog.showDialog();
-                activity.showTunerModes();
+                activity.openModes();
 //                bottomSheet.show(getFragmentManager(), "tunerModesBottomSheet");
 //                bottomSheet.setBottomSheetListener(new TunerModesBottomSheet.BottomSheetListener() {
 //                    @Override
@@ -356,6 +390,26 @@ public class TunerFragment extends Fragment {
                 });
             }
         }
+    }
+
+    public static Rect locateView(View v)
+    {
+        int[] loc_int = new int[2];
+        if (v == null) return null;
+        try
+        {
+            v.getLocationOnScreen(loc_int);
+        } catch (NullPointerException npe)
+        {
+            //Happens when the view doesn't exist on screen anymore.
+            return null;
+        }
+        Rect location = new Rect();
+        location.left = loc_int[0];
+        location.top = loc_int[1];
+        location.right = location.left + v.getWidth();
+        location.bottom = location.top + v.getHeight();
+        return location;
     }
 
     @BindingAdapter({"android:src"})

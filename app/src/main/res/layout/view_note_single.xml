@@ -39,7 +39,7 @@
                 android:fontFamily="@font/spacegrotesk_bold"
                 android:gravity="center"
                 android:textSize="16dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorGreenDark"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:text="@{note.note}" />

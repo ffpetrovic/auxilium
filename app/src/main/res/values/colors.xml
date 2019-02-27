@@ -19,4 +19,6 @@
     <color name="colorGrayTranslucent">#66333333</color>
     <color name="colorGreenTranslucent">#1800CBA9</color>
     <color name="colorRedTranslucent">#18FF328B</color>
+    <color name="colorGreenDark">#185A4F</color>
+
 </resources>

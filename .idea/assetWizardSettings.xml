@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_mode_pick_active" />
-                            <entry key="sourceFile" value="D:\WinDir\Downloads\img\auxilium\ic_mode_pick_active.svg" />
+                            <entry key="outputName" value="ic_help" />
+                            <entry key="sourceFile" value="D:\WinDir\Downloads\img\bx-help-circle.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -16,10 +16,6 @@ import com.filipetrovic.auxilium.TunerView.TunerFragment;
 import com.filipetrovic.auxilium.TunerView.TunerModesDialog;
 
 public class MainActivity extends AppCompatActivity {
-    TunerFragment tunerFragment;
-    TunerModesDialog tunerModesDialog;
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -31,8 +27,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showTunerModes() {
+    public void openModes() {
         Intent intent = new Intent(this, ModesActivity.class);
+        startActivity(intent);
+    }
+
+    public void openSettings() {
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
