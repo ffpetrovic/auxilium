@@ -15,6 +15,12 @@
         <item name="android:textColorPrimaryInverse">@android:color/white</item>
         <item name="android:textColorSecondaryInverse">@android:color/white</item>
         <item name="android:textColorTertiaryInverse">@android:color/white</item>
+        <item name="preferenceTheme">@style/PrefsTheme</item>
+    </style>
+
+    <style name="PrefsTheme" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
     </style>
 
     <style name="AppTheme.Activity">
@@ -67,6 +73,33 @@
         <item name="android:paddingRight">12dp</item>
         <!--<item name="android:layout_marginEnd">40dp</item>-->
         <item name="android:background">@drawable/rect_selector</item>
+    </style>
+
+    <style name="AppTheme.Preference">
+    </style>
+
+    <style name="AppTheme.Preference.Root">
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:paddingRight">30dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="AppTheme.Preference.ChoiceItem">
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <style name="AppTheme.Preference.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:fontFamily">@font/spacegrotesk_semibold</item>
+    </style>
+
+    <style name="AppTheme.Preference.Summary">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorTextSecondary</item>
+        <item name="android:fontFamily">@font/spacegrotesk_semibold</item>
     </style>
 
     <!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->

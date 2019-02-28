@@ -6,4 +6,11 @@
         <attr name="nbText" format="string" />
         <attr name="nbGroupText" format="string" />
     </declare-styleable>
+    <declare-styleable name="PreferenceChoice">
+        <attr name="key" />
+        <attr name="title" />
+        <attr name="summary" />
+        <attr name="entries" />
+        <attr name="entryValues" />
+    </declare-styleable>
 </resources>

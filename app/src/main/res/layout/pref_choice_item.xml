@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/pref_choice_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="120dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:background="@drawable/pref_item_bg"
+    android:gravity="center"
+    android:layout_marginEnd="15dp"
+    style="@style/AppTheme.Preference.ChoiceItem">
+    <TextView
+        android:id="@+id/pref_choice_tv"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/spacegrotesk_semibold"
+        android:textColor="@color/colorTextSecondary"/>
+</LinearLayout>

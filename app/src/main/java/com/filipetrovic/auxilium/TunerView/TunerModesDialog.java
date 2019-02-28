@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TunerModesDialog extends Fragment {
-    String tuningsJson = "{\"tunings\":[{\"groupName\":\"Guitar\",\"groupTunings\":[{\"tuningName\":\"Standard\",\"tuningNotes\":\"E2 A2 D3 G3 B3 E4\"},{\"tuningName\":\"Half-Step Down\",\"tuningNotes\":\"D#2 G#2 C#3 F#3 A#3 D#4\"},{\"tuningName\":\"Drop D\",\"tuningNotes\":\"D2 A2 D3 G3 B3 E4\"},{\"tuningName\":\"Drop C\",\"tuningNotes\":\"C2 G2 C3 F3 A3 D4\"},{\"tuningName\":\"Open D\",\"tuningNotes\":\"D2 A2 D3 F#3 A3 D4\"},{\"tuningName\":\"Open G\",\"tuningNotes\":\"D2 G2 D3 G3 B3 D4\"},{\"tuningName\":\"Open A\",\"tuningNotes\":\"E2 A2 E3 A3 C#4 E4\"},{\"tuningName\":\"Lute\",\"tuningNotes\":\"E2 A2 D3 F#3 B3 E4\"},{\"tuningName\":\"Irish\",\"tuningNotes\":\"D2 A2 D3 G3 A3 D4\"}]},{\"groupName\":\"Bass\",\"groupTunings\":[{\"tuningName\":\"Standard\",\"tuningNotes\":\"E1 A1 D2 G2\"},{\"tuningName\":\"Open D\",\"tuningNotes\":\"D1 A1 D2 G2\"},{\"tuningName\":\"Drop D\",\"tuningNotes\":\"D1 G1 C2 F2\"}]},{\"groupName\":\"Fiddle\",\"groupTunings\":[{\"tuningName\":\"Violin\",\"tuningNotes\":\"G3 D4 A4 E5\"},{\"tuningName\":\"Viola\",\"tuningNotes\":\"C3 G3 D4 A4\"},{\"tuningName\":\"Cello\",\"tuningNotes\":\"C2 G2 D3 A3\"}]}]}";
+    String tuningsJson = "{\"tunings\":[{\"groupName\":\"Chromatic\",\"groupTunings\":[{\"tuningName\":\"Automatic\"}]},{\"groupName\":\"Guitar\",\"groupTunings\":[{\"tuningName\":\"Standard\",\"tuningNotes\":\"E2 A2 D3 G3 B3 E4\"},{\"tuningName\":\"Half-Step Down\",\"tuningNotes\":\"D#2 G#2 C#3 F#3 A#3 D#4\"},{\"tuningName\":\"Drop D\",\"tuningNotes\":\"D2 A2 D3 G3 B3 E4\"},{\"tuningName\":\"Drop C\",\"tuningNotes\":\"C2 G2 C3 F3 A3 D4\"},{\"tuningName\":\"Open D\",\"tuningNotes\":\"D2 A2 D3 F#3 A3 D4\"},{\"tuningName\":\"Open G\",\"tuningNotes\":\"D2 G2 D3 G3 B3 D4\"},{\"tuningName\":\"Open A\",\"tuningNotes\":\"E2 A2 E3 A3 C#4 E4\"},{\"tuningName\":\"Lute\",\"tuningNotes\":\"E2 A2 D3 F#3 B3 E4\"},{\"tuningName\":\"Irish\",\"tuningNotes\":\"D2 A2 D3 G3 A3 D4\"}]},{\"groupName\":\"Bass\",\"groupTunings\":[{\"tuningName\":\"Standard\",\"tuningNotes\":\"E1 A1 D2 G2\"},{\"tuningName\":\"Open D\",\"tuningNotes\":\"D1 A1 D2 G2\"},{\"tuningName\":\"Drop D\",\"tuningNotes\":\"D1 G1 C2 F2\"}]},{\"groupName\":\"Fiddle\",\"groupTunings\":[{\"tuningName\":\"Violin\",\"tuningNotes\":\"G3 D4 A4 E5\"},{\"tuningName\":\"Viola\",\"tuningNotes\":\"C3 G3 D4 A4\"},{\"tuningName\":\"Cello\",\"tuningNotes\":\"C2 G2 D3 A3\"}]}]}";
 
     private TuningSelectedListener mListener;
     private TunerMode tunerModeSelected = null;
@@ -102,9 +102,13 @@ public class TunerModesDialog extends Fragment {
                 for(int j = 0; j < tunings.length(); j++) {
                     JSONObject tuning = tunings.getJSONObject(j);
                     TunerMode mode = new TunerMode();
-                    mode.setName(tuning.getString("tuningName"));
-                    mode.setNotes(tuning.getString("tuningNotes"));
-                    mode.setGroup(tuningsGroupTitle);
+                    if(tuning.getString("tuningName").equals("Automatic")) {
+                        mode = TunerMode.getChromaticMode();
+                    } else {
+                        mode.setName(tuning.getString("tuningName"));
+                        mode.setNotes(tuning.getString("tuningNotes"));
+                        mode.setGroup(tuningsGroupTitle);
+                    }
                     addTuningsItemView(mode, root.findViewById(R.id.tuningsInnerWrapper),inflater);
                 }
             }
@@ -149,8 +153,13 @@ public class TunerModesDialog extends Fragment {
             }
         });
 
-        ((TextView) view.findViewById(R.id.tuningName)).setText(title);
-        ((TextView) view.findViewById(R.id.tuningNotes)).setText(notes);
+        if(mode.name.equals("Chromatic")) {
+            ((TextView) view.findViewById(R.id.tuningName)).setText("Automatic");
+            ((TextView) view.findViewById(R.id.tuningNotes)).setText("Any notes");
+        } else {
+            ((TextView) view.findViewById(R.id.tuningName)).setText(title);
+            ((TextView) view.findViewById(R.id.tuningNotes)).setText(notes);
+        }
         root.addView(view);
     }
 

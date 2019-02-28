@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO},
                     11);
         }
+
+        openSettings();
     }
 
     public void openModes() {

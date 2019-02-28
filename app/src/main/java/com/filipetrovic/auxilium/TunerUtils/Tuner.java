@@ -143,8 +143,8 @@ public class Tuner {
                         hasValidResult.set(result.frequency > -1);
                         hasCorrectResult.set(getType() == Indicator.INDICATOR_TYPE.CORRECT);
 
-                        Log.d("AUX_LOG", "valid: " + (getType() != Indicator.INDICATOR_TYPE.INACTIVE));
-                        Log.d("AUX_LOG", "correct: " + hasCorrectResult.get());
+//                        Log.d("AUX_LOG", "valid: " + (getType() != Indicator.INDICATOR_TYPE.INACTIVE));
+//                        Log.d("AUX_LOG", "correct: " + hasCorrectResult.get());
 
                         if(getType() == Indicator.INDICATOR_TYPE.CORRECT && !tunerMode.isChromatic()) {
                             tunerMode.setInTune(result.getNoteLabelWithAugAndOctave());

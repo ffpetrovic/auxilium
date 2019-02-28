@@ -148,7 +148,7 @@ public class TunerFragment extends Fragment {
                 View settingsItem = popupView.findViewById(R.id.menu_item_settings);
                 // Do your customised stuff
 
-                PopupWindow popupWindow = new PopupWindow(
+                final PopupWindow popupWindow = new PopupWindow(
                         popupView,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -162,6 +162,7 @@ public class TunerFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         ((MainActivity) getActivity()).openSettings();
+                        popupWindow.dismiss();
                     }
                 });
                 popupWindow.showAsDropDown(binding.menuButton, 1000, -1000);

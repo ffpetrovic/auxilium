@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="accidentals_entries_array">
+        <item>C#</item>
+        <item>Db</item>
+    </string-array>
+    <string-array name="accidentals_values_array">
+        <item>sharp</item>
+        <item>flat</item>
+    </string-array>
+
+    <string-array name="naming_entries_array">
+        <item>C D E</item>
+        <item>Do Re mi</item>
+    </string-array>
+    <string-array name="naming_values_array">
+        <item>letters</item>
+        <item>solfege</item>
+    </string-array>
+</resources>

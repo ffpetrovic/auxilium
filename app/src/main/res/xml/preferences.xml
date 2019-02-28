@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.filipetrovic.auxilium.Settings.PreferenceChoice
+        android:key="tuner_accidentals"
+        android:defaultValue="@string/pref_accidentals_default"
+        app:title="@string/pref_accidentals_title"
+        app:summary="@string/pref_accidentals_summary"
+        app:entries="@array/accidentals_entries_array"
+        app:entryValues="@array/accidentals_values_array"/>
+    <com.filipetrovic.auxilium.Settings.PreferenceChoice
+        android:key="tuner_naming"
+        android:defaultValue="@string/pref_naming_default"
+        app:title="@string/pref_naming_title"
+        app:summary="@string/pref_naming_summary"
+        app:entries="@array/naming_entries_array"
+        app:entryValues="@array/naming_values_array"/>
+</android.support.v7.preference.PreferenceScreen>
