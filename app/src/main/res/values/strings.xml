@@ -8,4 +8,16 @@
     <string name="pref_naming_title">Note naming convention</string>
     <string name="pref_naming_summary">Choose which note naming convention to use.</string>
     <string name="pref_naming_default">letters</string>
+
+    <string name="pref_calibration_title">Calibrate tuner</string>
+    <string name="pref_calibration_summary">Adjust to calibrate the base frequency of
+the tuner</string>
+    <string name="pref_calibration_label_format">%d Hz</string>
+
+    <string name="pref_sfx_title">Sound effects</string>
+    <string name="pref_sfx_summary">Enable or disable correct tune and app start sounds</string>
+
+    <string name="pref_suppressor_title">Noise cancellation</string>
+    <string name="pref_suppressor_summary">Enable or disable noise cancellation
+for loud environments</string>
 </resources>

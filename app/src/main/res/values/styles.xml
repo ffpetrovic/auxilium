@@ -81,8 +81,8 @@
     <style name="AppTheme.Preference.Root">
         <item name="android:paddingLeft">30dp</item>
         <item name="android:paddingRight">30dp</item>
-        <item name="android:layout_marginTop">20dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
     </style>
 
     <style name="AppTheme.Preference.ChoiceItem">
@@ -100,6 +100,19 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorTextSecondary</item>
         <item name="android:fontFamily">@font/spacegrotesk_semibold</item>
+    </style>
+
+    <style name="AppTheme.Preference.Label">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorTextSecondary</item>
+        <item name="android:fontFamily">@font/spacegrotesk_semibold</item>
+    </style>
+
+    <style name="AppTheme.Preference.SeekBar">
+        <item name="android:thumb">@drawable/seekbar_thumb</item>
+        <item name="android:progressDrawable">@drawable/seekbar_progress</item>
+        <item name="android:layout_marginLeft">-10dp</item>
+        <item name="android:layout_marginRight">-10dp</item>
     </style>
 
     <!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->

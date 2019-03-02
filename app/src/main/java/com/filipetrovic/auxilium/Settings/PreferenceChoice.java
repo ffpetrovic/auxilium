@@ -46,6 +46,7 @@ public class PreferenceChoice extends Preference {
 
     private void init(Context context, AttributeSet attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PreferenceChoice);
+
         int entriesResId = ta.getResourceId(R.styleable.PreferenceChoice_entries, 0);
         if (entriesResId != 0) {
             mEntries = context.getResources().getStringArray(entriesResId);
@@ -53,11 +54,6 @@ public class PreferenceChoice extends Preference {
         int valuesResId = ta.getResourceId(R.styleable.PreferenceChoice_entryValues, 0);
         if (valuesResId != 0) {
             mEntryValues = context.getResources().getStringArray(valuesResId);
-        }
-
-        int keyResId = ta.getResourceId(R.styleable.PreferenceChoice_key, 0);
-        if (keyResId != 0) {
-            mKey = context.getResources().getString(keyResId);
         }
 
         int titleResId = ta.getResourceId(R.styleable.PreferenceChoice_title, 0);

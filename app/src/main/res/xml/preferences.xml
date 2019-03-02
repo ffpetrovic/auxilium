@@ -8,6 +8,7 @@
         app:summary="@string/pref_accidentals_summary"
         app:entries="@array/accidentals_entries_array"
         app:entryValues="@array/accidentals_values_array"/>
+
     <com.filipetrovic.auxilium.Settings.PreferenceChoice
         android:key="tuner_naming"
         android:defaultValue="@string/pref_naming_default"
@@ -15,4 +16,26 @@
         app:summary="@string/pref_naming_summary"
         app:entries="@array/naming_entries_array"
         app:entryValues="@array/naming_values_array"/>
+
+    <com.filipetrovic.auxilium.Settings.PreferenceNumber
+        android:key="tuner_calibration"
+        android:defaultValue="@integer/pref_calibration_default"
+        app:title="@string/pref_calibration_title"
+        app:summary="@string/pref_calibration_summary"
+        app:numberStep="@integer/pref_calibration_step"
+        app:numberMin="@integer/pref_calibration_min"
+        app:numberMax="@integer/pref_calibration_max"
+        app:labelFormat="@string/pref_calibration_label_format" />
+
+    <com.filipetrovic.auxilium.Settings.PreferenceSwitch
+        android:key="tuner_sfx"
+        android:defaultValue="@bool/pref_sfx_default"
+        app:title="@string/pref_sfx_title"
+        app:summary="@string/pref_sfx_summary" />
+
+    <com.filipetrovic.auxilium.Settings.PreferenceSwitch
+        android:key="tuner_suppressor"
+        android:defaultValue="@bool/pref_suppressor_default"
+        app:title="@string/pref_suppressor_title"
+        app:summary="@string/pref_suppressor_summary" />
 </android.support.v7.preference.PreferenceScreen>
