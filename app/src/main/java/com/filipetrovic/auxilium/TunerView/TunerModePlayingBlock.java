@@ -2,33 +2,17 @@ package com.filipetrovic.auxilium.TunerView;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
-import android.databinding.DataBindingUtil;
-import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
-import android.databinding.ViewDataBinding;
-import android.graphics.Typeface;
-import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.filipetrovic.auxilium.BR;
-import com.filipetrovic.auxilium.Interface.INoteClickToPlayEvent;
 import com.filipetrovic.auxilium.R;
 import com.filipetrovic.auxilium.TunerUtils.Note;
-import com.filipetrovic.auxilium.Utils.CustomFontHelper;
-import com.filipetrovic.auxilium.databinding.ViewNoteSingleBinding;
+import com.filipetrovic.auxilium.TunerUtils.TunerOptions;
 
 public class TunerModePlayingBlock extends RelativeLayout {
 
@@ -78,6 +62,14 @@ public class TunerModePlayingBlock extends RelativeLayout {
 
     @BindingAdapter({"app:currentNotePlaying"})
     public static void setNavigationBlockText(TunerModePlayingBlock view, ObservableField<String> note) {
-        ((TextView) view.findViewById(R.id.tvNote)).setText(note.get());
+        if(!note.get().equals("")) {
+            Note parsedNote = Note.parse(note.get(), new TunerOptions(view.getContext()));
+            String n = parsedNote.getTranslatedNote() + parsedNote.getOctave();
+            ((TextView) view.findViewById(R.id.tvNote)).setText(n);
+        } else {
+            ((TextView) view.findViewById(R.id.tvNote)).setText(note.get());
+        }
+
+
     }
 }

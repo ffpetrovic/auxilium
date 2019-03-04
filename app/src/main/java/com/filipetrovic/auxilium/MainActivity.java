@@ -12,9 +12,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.filipetrovic.auxilium.TunerView.TunerFragment;
-import com.filipetrovic.auxilium.TunerView.TunerModesDialog;
-
 public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

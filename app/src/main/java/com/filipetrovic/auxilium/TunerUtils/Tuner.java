@@ -12,7 +12,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.util.Log;
 
+import com.filipetrovic.auxilium.R;
 import com.filipetrovic.auxilium.TunerView.Indicator;
+import com.filipetrovic.auxilium.Utils.SharedPreferencesHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +30,10 @@ public class Tuner {
     private short[]     statusBuffer = new short[20];
     private String[]    noteBuffer = new String[30];
     public boolean      isFake = false;
+
+    /* Preference Options */
+    public TunerOptions options;
+    /* // */
 
 
     public long ptr = 0;
@@ -66,6 +72,7 @@ public class Tuner {
 
     public Tuner(Context context, TunerMode mode) {
         mContext = context;
+        options =  new TunerOptions(context);
         init(mode);
     }
 
@@ -131,7 +138,7 @@ public class Tuner {
             if(!isMuted) {
                 amountRead = audioRecord.read(intermediaryBuffer, 0, readSize);
                 buffer = shortArrayToFloatArray(intermediaryBuffer);
-                final TunerResult result = new TunerResult(getPitch(buffer), tunerMode.getNotesObjects());
+                final TunerResult result = new TunerResult(getPitch(buffer), tunerMode.getNotesObjects(), options);
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -286,7 +293,7 @@ public class Tuner {
 
     public void sendNullResult() {
         if(onNoteFoundListener != null) {
-            TunerResult nullTunerResult = new TunerResult(0, tunerMode.getNotesObjects());
+            TunerResult nullTunerResult = new TunerResult(0, tunerMode.getNotesObjects(), options);
             nullTunerResult.type = Indicator.INDICATOR_TYPE.INACTIVE;
             nullTunerResult.percentage = 50f;
             onNoteFoundListener.onEvent(nullTunerResult);

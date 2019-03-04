@@ -42,7 +42,7 @@
                 android:textColor="@color/colorGreenDark"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:text="@{note.note}" />
+                android:text="@{note.getTranslatedNote()}" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 android:textColor="@color/colorWhite"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:text="@{note.note}" />
+                android:text="@{note.getTranslatedNote()}" />
         </RelativeLayout>
 
 
@@ -89,7 +89,7 @@
                 android:textColor="@color/colorWhite"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:text="@{note.note}" />
+                android:text="@{note.getTranslatedNote()}" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -113,7 +113,7 @@
                 android:textColor="@color/colorGreen"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:text="@{note.note}" />
+                android:text="@{note.getTranslatedNote()}" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -135,7 +135,7 @@
                 android:textColor="@color/colorGreen"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:text="@{note.note}" />
+                android:text="@{note.getTranslatedNote()}" />
         </RelativeLayout>
 
     </LinearLayout>

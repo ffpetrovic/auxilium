@@ -2,17 +2,18 @@ package com.filipetrovic.auxilium.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.filipetrovic.auxilium.R;
 
 public class SharedPreferencesHelper {
-    private final static String PREF_FILE = "PREF";
-
     /**
      * Set a string shared preference
      * @param key - Key to set shared preference
      * @param value - Value for the key
      */
     public static void setSharedPreferenceString(Context context, String key, String value){
-        SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(key, value);
         editor.apply();
@@ -24,7 +25,7 @@ public class SharedPreferencesHelper {
      * @param value - Value for the key
      */
     public static void setSharedPreferenceInt(Context context, String key, int value){
-        SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
         editor.apply();
@@ -36,7 +37,7 @@ public class SharedPreferencesHelper {
      * @param value - Value for the key
      */
     public static void setSharedPreferenceBoolean(Context context, String key, boolean value){
-        SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(key, value);
         editor.apply();
@@ -49,7 +50,7 @@ public class SharedPreferencesHelper {
      * @return value - String containing value of the shared preference if found.
      */
     public static String getSharedPreferenceString(Context context, String key, String defValue){
-        SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         return settings.getString(key, defValue);
     }
 
@@ -60,7 +61,7 @@ public class SharedPreferencesHelper {
      * @return value - String containing value of the shared preference if found.
      */
     public static int getSharedPreferenceInt(Context context, String key, int defValue){
-        SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         return settings.getInt(key, defValue);
     }
 
@@ -71,9 +72,7 @@ public class SharedPreferencesHelper {
      * @return value - String containing value of the shared preference if found.
      */
     public static boolean getSharedPreferenceBoolean(Context context, String key, boolean defValue){
-        SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         return settings.getBoolean(key, defValue);
     }
-
-    public static String defaultTunerMode = "Guitar,Standard,E2 A2 D3 G3 B3 E4";
 }

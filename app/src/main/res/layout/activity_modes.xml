@@ -7,7 +7,7 @@
     tools:context=".ModesActivity">
 
     <fragment
-        android:id="@+id/fragment_tuner_view"
+        android:id="@+id/fragment_modes_view"
         android:name="com.filipetrovic.auxilium.TunerView.TunerModesDialog"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

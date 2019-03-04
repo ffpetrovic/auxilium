@@ -1,7 +1,5 @@
 package com.filipetrovic.auxilium.TunerUtils;
 
-import android.util.Log;
-
 import com.filipetrovic.auxilium.TunerView.Indicator;
 
 public class TunerResult {
@@ -9,6 +7,7 @@ public class TunerResult {
     public double percentage;
     public double percentageActual;
     public String note;
+    private TunerOptions tunerOptions;
 
     public String getNote() {
         return note;
@@ -36,7 +35,7 @@ public class TunerResult {
 
     public String getNoteLabel() {
         String noteName = this.note;
-        if(noteName.contains("#")) {
+        if(noteName.contains("#") || noteName.contains("b")) {
             noteName = noteName.substring(0, 1);
         }
         return noteName;
@@ -95,8 +94,10 @@ public class TunerResult {
 
 
     public String getNoteAug() {
-        if(this.note.contains("#")) {
-            return "#";
+        if(this.noteObj != null) {
+            if(this.noteObj.isAccidental() && this.tunerOptions.naming.equals("english")) {
+                return this.tunerOptions.sharps ? "#" : "b";
+            }
         }
         return "";
     }
@@ -105,8 +106,10 @@ public class TunerResult {
     public float frequency;
     private float tolerance = .1f;
     public Indicator.INDICATOR_TYPE type;
+    private Note noteObj;
 
-    public TunerResult(double freq, Note[] notesMatch) {
+    public TunerResult(double freq, Note[] notesMatch, TunerOptions tunerOptions) {
+        this.tunerOptions = tunerOptions;
         int index = -1;
         Double dist = java.lang.Double.MAX_VALUE;
         for (int i = 0; i < notesMatch.length; i++) {
@@ -119,7 +122,7 @@ public class TunerResult {
         }
         Note mNote = notesMatch[index];
         this.octave = mNote.octave;
-        this.note =  mNote.note;
+        this.note =  mNote.getTranslatedNote();
 
         double curNote = mNote.frequency;
         if(freq != 0) {
@@ -140,7 +143,7 @@ public class TunerResult {
 
 
 
-            this.percentage = Note.parse(freq).offsetFrom(mNote) + 50;
+            this.percentage = Note.parse(freq, tunerOptions).offsetFrom(mNote) + 50;
             this.percentageActual = this.percentage;
 
             if(this.percentage > 50 - 50 * tolerance && this.percentage < 50 + 50 * tolerance) {
@@ -159,8 +162,10 @@ public class TunerResult {
 
 
             this.frequency = (float) Math.round( freq * 100.00) / 100.00f;
+            this.noteObj = mNote;
         } else {
             this.note = "";
+            this.noteObj = null;
             this.octave = 0;
             this.frequency = 0.0f;
 //            this.percentage = 50.0;

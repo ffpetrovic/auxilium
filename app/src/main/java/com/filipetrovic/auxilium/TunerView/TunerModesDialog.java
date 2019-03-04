@@ -38,7 +38,9 @@ import com.filipetrovic.auxilium.MainActivity;
 import com.filipetrovic.auxilium.ModesActivity;
 import com.filipetrovic.auxilium.R;
 import com.filipetrovic.auxilium.TunerUtils.Note;
+import com.filipetrovic.auxilium.TunerUtils.Tuner;
 import com.filipetrovic.auxilium.TunerUtils.TunerMode;
+import com.filipetrovic.auxilium.TunerUtils.TunerOptions;
 import com.filipetrovic.auxilium.Utils.CustomFontHelper;
 import com.filipetrovic.auxilium.Utils.SharedPreferencesHelper;
 import com.filipetrovic.auxilium.databinding.ViewNoteSingleBinding;
@@ -51,12 +53,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TunerModesDialog extends Fragment {
-    String tuningsJson = "{\"tunings\":[{\"groupName\":\"Chromatic\",\"groupTunings\":[{\"tuningName\":\"Automatic\"}]},{\"groupName\":\"Guitar\",\"groupTunings\":[{\"tuningName\":\"Standard\",\"tuningNotes\":\"E2 A2 D3 G3 B3 E4\"},{\"tuningName\":\"Half-Step Down\",\"tuningNotes\":\"D#2 G#2 C#3 F#3 A#3 D#4\"},{\"tuningName\":\"Drop D\",\"tuningNotes\":\"D2 A2 D3 G3 B3 E4\"},{\"tuningName\":\"Drop C\",\"tuningNotes\":\"C2 G2 C3 F3 A3 D4\"},{\"tuningName\":\"Open D\",\"tuningNotes\":\"D2 A2 D3 F#3 A3 D4\"},{\"tuningName\":\"Open G\",\"tuningNotes\":\"D2 G2 D3 G3 B3 D4\"},{\"tuningName\":\"Open A\",\"tuningNotes\":\"E2 A2 E3 A3 C#4 E4\"},{\"tuningName\":\"Lute\",\"tuningNotes\":\"E2 A2 D3 F#3 B3 E4\"},{\"tuningName\":\"Irish\",\"tuningNotes\":\"D2 A2 D3 G3 A3 D4\"}]},{\"groupName\":\"Bass\",\"groupTunings\":[{\"tuningName\":\"Standard\",\"tuningNotes\":\"E1 A1 D2 G2\"},{\"tuningName\":\"Open D\",\"tuningNotes\":\"D1 A1 D2 G2\"},{\"tuningName\":\"Drop D\",\"tuningNotes\":\"D1 G1 C2 F2\"}]},{\"groupName\":\"Fiddle\",\"groupTunings\":[{\"tuningName\":\"Violin\",\"tuningNotes\":\"G3 D4 A4 E5\"},{\"tuningName\":\"Viola\",\"tuningNotes\":\"C3 G3 D4 A4\"},{\"tuningName\":\"Cello\",\"tuningNotes\":\"C2 G2 D3 A3\"}]}]}";
+    String tuningsJson;
 
     private TuningSelectedListener mListener;
     private TunerMode tunerModeSelected = null;
     private List<String> tunings = new ArrayList<>();
     private List<View> tuningActiveIndicators = new ArrayList<>();
+    TunerOptions tunerOptions;
 
     private MainActivity activity;
 
@@ -78,9 +81,15 @@ public class TunerModesDialog extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        tunerOptions = new TunerOptions(getContext());
+        tuningsJson = getString(R.string.tunings_json);
+
+
+
         inflateScreen(rootView, getLayoutInflater());
         for(int i = 0; i < tunings.size(); i++) {
-            if(tunings.get(i).equals(SharedPreferencesHelper.getSharedPreferenceString(rootView.getContext(), "selectedTunerMode", SharedPreferencesHelper.defaultTunerMode))) {
+            if(tunings.get(i).equals(SharedPreferencesHelper.getSharedPreferenceString(rootView.getContext(), "selectedTunerMode", getString(R.string.tuner_mode_default)))) {
                 tuningActiveIndicators.get(i).setVisibility(View.VISIBLE);
             } else {
                 tuningActiveIndicators.get(i).setVisibility(View.INVISIBLE);
@@ -88,7 +97,8 @@ public class TunerModesDialog extends Fragment {
         }
     }
 
-    void inflateScreen(View root, LayoutInflater inflater) {
+    public void inflateScreen(View root, LayoutInflater inflater) {
+
         JSONObject mainObject = null;
         try {
             mainObject = new JSONObject(tuningsJson);
@@ -97,14 +107,14 @@ public class TunerModesDialog extends Fragment {
                 JSONObject tuningsGroup = tuningsArray.getJSONObject(i);
                 String tuningsGroupTitle = tuningsGroup.getString("groupName");
                 JSONArray tunings = tuningsGroup.getJSONArray("groupTunings");
-
                 addTitleView(tuningsGroupTitle, root.findViewById(R.id.tuningsInnerWrapper),inflater);
                 for(int j = 0; j < tunings.length(); j++) {
                     JSONObject tuning = tunings.getJSONObject(j);
-                    TunerMode mode = new TunerMode();
+                    TunerMode mode;
                     if(tuning.getString("tuningName").equals("Automatic")) {
-                        mode = TunerMode.getChromaticMode();
+                        mode = TunerMode.getChromaticMode(getContext());
                     } else {
+                        mode = new TunerMode(tunerOptions);
                         mode.setName(tuning.getString("tuningName"));
                         mode.setNotes(tuning.getString("tuningNotes"));
                         mode.setGroup(tuningsGroupTitle);
@@ -137,8 +147,8 @@ public class TunerModesDialog extends Fragment {
 
     void addTuningsItemView(final TunerMode mode, final View r, LayoutInflater inflater) {
         ViewGroup root = (ViewGroup) r;
-        String title = mode.getName();
-        String notes = mode.getNotes();
+        String title = mode.getNameLabel();
+        String notes = mode.getNotesLabel();
         View view = inflater
                 .inflate(R.layout.view_tunings_bottom_sheet_item, root, false);
 
@@ -153,13 +163,9 @@ public class TunerModesDialog extends Fragment {
             }
         });
 
-        if(mode.name.equals("Chromatic")) {
-            ((TextView) view.findViewById(R.id.tuningName)).setText("Automatic");
-            ((TextView) view.findViewById(R.id.tuningNotes)).setText("Any notes");
-        } else {
-            ((TextView) view.findViewById(R.id.tuningName)).setText(title);
-            ((TextView) view.findViewById(R.id.tuningNotes)).setText(notes);
-        }
+        ((TextView) view.findViewById(R.id.tuningName)).setText(title);
+        ((TextView) view.findViewById(R.id.tuningNotes)).setText(notes);
+
         root.addView(view);
     }
 

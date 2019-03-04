@@ -5,6 +5,7 @@ import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.filipetrovic.auxilium.MainActivity;
 import com.filipetrovic.auxilium.R;
 import com.filipetrovic.auxilium.TunerUtils.SoundPlayer;
 import com.filipetrovic.auxilium.TunerUtils.TunerMode;
+import com.filipetrovic.auxilium.TunerUtils.TunerOptions;
 import com.filipetrovic.auxilium.TunerUtils.TunerResult;
 import com.filipetrovic.auxilium.TunerUtils.Tuner;
 import com.filipetrovic.auxilium.Utils.SharedPreferencesHelper;
@@ -29,8 +31,6 @@ public class TunerFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        Log.d("AUX_LOG", "onResume()");
     }
 
     private Tuner tuner;
@@ -45,18 +45,13 @@ public class TunerFragment extends Fragment {
 
     public TunerFragment() {}
     public static TunerFragment newInstance(String param1, String param2) {
-        TunerFragment fragment = new TunerFragment();
-        return fragment;
+        return new TunerFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         soundPlayer = new SoundPlayer(getContext());
-
-        Log.d("AUX_LOG", "TunerFragment onCreate");
-
-//        initTuner();
     }
 
     public void resetTuner(View v) {
@@ -66,8 +61,9 @@ public class TunerFragment extends Fragment {
 
     public void initTuner() {
         String tunerModeString =
-                SharedPreferencesHelper.getSharedPreferenceString(getContext(), "selectedTunerMode", SharedPreferencesHelper.defaultTunerMode);
-        TunerMode tunerMode = TunerMode.valueOf(tunerModeString);
+                SharedPreferencesHelper.getSharedPreferenceString(getContext(), "selectedTunerMode", getString(R.string.tuner_mode_default));
+        TunerOptions tunerOptions = new TunerOptions(getContext());
+        TunerMode tunerMode = TunerMode.valueOf(tunerModeString, getContext());
         tuner = new Tuner(getContext(), tunerMode);
         tuner.setSoundPlayer(soundPlayer);
         binding.setTuner(tuner);
@@ -131,7 +127,7 @@ public class TunerFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentTunerBinding.inflate(inflater, container, false);
@@ -176,53 +172,18 @@ public class TunerFragment extends Fragment {
         binding.navigationBlockAutomatic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stop();
-                TunerMode tunerMode = TunerMode.getChromaticMode();
-                SharedPreferencesHelper.setSharedPreferenceString(getContext(), "selectedTunerMode", tunerMode.toString());
-                start();
+
             }
         });
         binding.navigationBlockPick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                stop();
-//                TunerMode tunerMode = new TunerMode();
-//                tunerMode.setName("Standard");
-//                tunerMode.setGroup("Guitar");
-//                tunerMode.setNotes("E2 A2 D3 G3 B3 E4");
-//                tuner = new Tuner(getContext(), tunerMode);
-//                binding.setTuner(tuner);
-//                binding.tunerLine.setPercentage(50f);
-//                tuner.start();
-//                tuner.setOnNoteFoundListener(new Tuner.OnNoteFoundListener() {
-//                    @Override
-//                    public void onEvent(TunerResult note) {
-//                        noteFound(note);
-//                    }
-//                });
-
                 if(isRecording()) {
                     stop();
                 }
-                // Bottom Sheet was performing really badly. Perhaps due to inflating tens of
-                // dozens of views each time it's open. Also it was behaving strangely onPause
-                // and on other lifecycle events. See TunerModesBottomSheet.java for usage.
-                // Resorting to a static full-screen modal type of view.
-//                binding.tunerModesDialog.showDialog();
                 activity.openModes();
-//                bottomSheet.show(getFragmentManager(), "tunerModesBottomSheet");
-//                bottomSheet.setBottomSheetListener(new TunerModesBottomSheet.BottomSheetListener() {
-//                    @Override
-//                    public void onTuningSelected(TunerMode mode) {
-//                        if(mode != null) {
-//                            SharedPreferencesHelper.setSharedPreferenceString(getContext(), "selectedTunerMode", mode.toString());
-//                        }
-//                        start();
-//                    }
-//                });
             }
         });
-
         noteClickToPlayEvent = new INoteClickToPlayEvent() {
             @Override
             public void onEvent(String note) {
@@ -231,13 +192,6 @@ public class TunerFragment extends Fragment {
                 tuner.setMuted(soundPlayer.isPlayingNote());
             }
         };
-//        binding.viewCurrentNotePlayingIndicator.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                soundPlayer.playNote("");
-//                tuner.setMuted(soundPlayer.isPlaying());
-//            }
-//        });
         binding.notesCollectionBlock.setNoteClickToPlayEvent(noteClickToPlayEvent);
         soundPlayer.setOnNotePlayerFinished(new INotePlayerFinished() {
             @Override
@@ -300,11 +254,11 @@ public class TunerFragment extends Fragment {
         } else if((tuner == null || tuner.isFake) || (!tuner.isRecording)) {
             // Checking if we've already created a placeholder tuner
             // OR if a tuner already exists but isn't recording
-            tuner = new Tuner(getContext(), TunerMode.getChromaticMode());
+            tuner = new Tuner(getContext(), TunerMode.getChromaticMode(getContext()));
             tuner.isFake = true;
             binding.setTuner(tuner);
             TunerResult fakeTunerResult =
-                    new TunerResult(0.00, tuner.tunerMode.getNotesObjects());
+                    new TunerResult(0.00, tuner.tunerMode.getNotesObjects(), new TunerOptions(getContext()));
             binding.setResult(fakeTunerResult);
             binding.setCurrentNotePlaying(soundPlayer.currentNote);
 
@@ -391,26 +345,6 @@ public class TunerFragment extends Fragment {
                 });
             }
         }
-    }
-
-    public static Rect locateView(View v)
-    {
-        int[] loc_int = new int[2];
-        if (v == null) return null;
-        try
-        {
-            v.getLocationOnScreen(loc_int);
-        } catch (NullPointerException npe)
-        {
-            //Happens when the view doesn't exist on screen anymore.
-            return null;
-        }
-        Rect location = new Rect();
-        location.left = loc_int[0];
-        location.top = loc_int[1];
-        location.right = location.left + v.getWidth();
-        location.bottom = location.top + v.getHeight();
-        return location;
     }
 
     @BindingAdapter({"android:src"})

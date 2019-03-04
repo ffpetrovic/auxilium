@@ -5,26 +5,17 @@ import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
-import android.databinding.ViewDataBinding;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.filipetrovic.auxilium.BR;
 import com.filipetrovic.auxilium.Interface.INoteClickToPlayEvent;
 import com.filipetrovic.auxilium.R;
 import com.filipetrovic.auxilium.TunerUtils.Note;
+import com.filipetrovic.auxilium.TunerUtils.TunerOptions;
 import com.filipetrovic.auxilium.Utils.CustomFontHelper;
 import com.filipetrovic.auxilium.databinding.ViewNoteSingleBinding;
 
@@ -77,7 +68,7 @@ public class TunerNotesCollectionBlock extends LinearLayout {
                 binding.getRoot().findViewById(R.id.viewRoot).setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        collectionBlockView.getNoteClickToPlayEvent().onEvent(binding.getNote().toString());
+                        collectionBlockView.getNoteClickToPlayEvent().onEvent(binding.getNote().getRealNote() + binding.getNote().getOctave());
                     }
                 });
                 binding.setNote(n);
@@ -100,9 +91,18 @@ public class TunerNotesCollectionBlock extends LinearLayout {
     public static void setCurrentNotePlaying(TunerNotesCollectionBlock collectionBlockView,
                                       ObservableField<String> note) {
         if(collectionBlockView.noteViewBindings != null) {
-            for(ViewNoteSingleBinding noteViewBinding : collectionBlockView.noteViewBindings) {
-                noteViewBinding.setCurrentNotePlaying(note);
+            if(!note.get().equals("")) {
+                Note parsedNote = Note.parse(note.get(), new TunerOptions(collectionBlockView.getContext()));
+                String localizedNote = parsedNote.getTranslatedNote() + parsedNote.getOctave();
+                for(ViewNoteSingleBinding noteViewBinding : collectionBlockView.noteViewBindings) {
+                    noteViewBinding.setCurrentNotePlaying(new ObservableField<>(localizedNote));
+                }
+            } else {
+                for(ViewNoteSingleBinding noteViewBinding : collectionBlockView.noteViewBindings) {
+                    noteViewBinding.setCurrentNotePlaying(note);
+                }
             }
+
         }
     }
 
