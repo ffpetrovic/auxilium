@@ -16,7 +16,7 @@ import android.widget.ViewSwitcher;
 
 import com.filipetrovic.auxilium.R;
 
-public class PreferenceSwitch extends Preference implements Preference.OnPreferenceClickListener {
+public class PreferenceSwitch extends CustomPreference implements Preference.OnPreferenceClickListener {
 
     /*  Couldn't get `android:title` and `android:summary` to
         work and actually set the text of the android:id/title
@@ -93,7 +93,7 @@ public class PreferenceSwitch extends Preference implements Preference.OnPrefere
         checkBoxView.setInAnimation(inAnim);
         checkBoxView.setOutAnimation(outAnim);
 
-        updateCheckBoxView();
+        updatePreferenceView();
     }
 
     @Override
@@ -101,7 +101,8 @@ public class PreferenceSwitch extends Preference implements Preference.OnPrefere
         return true;
     }
 
-    private void updateCheckBoxView() {
+    @Override
+    public void updatePreferenceView() {
         if (getPersistedBoolean(defaultValue)) {
             checkBoxView.setImageDrawable(getContext().getDrawable(R.drawable.ic_check_checked));
         } else {
@@ -112,7 +113,7 @@ public class PreferenceSwitch extends Preference implements Preference.OnPrefere
     @Override
     public boolean onPreferenceClick(Preference preference) {
         persistBoolean(!getPersistedBoolean(defaultValue));
-        updateCheckBoxView();
+        updatePreferenceView();
         return true;
     }
 }

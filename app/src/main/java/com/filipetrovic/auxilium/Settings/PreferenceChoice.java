@@ -15,7 +15,7 @@ import com.filipetrovic.auxilium.R;
 
 import java.util.ArrayList;
 
-public class PreferenceChoice extends Preference {
+public class PreferenceChoice extends CustomPreference {
 
     /*  Couldn't get `android:title` and `android:summary` to
         work and actually set the text of the android:id/title
@@ -31,7 +31,7 @@ public class PreferenceChoice extends Preference {
 
     private String defaultValue;
 
-
+    private PreferenceChoiceAdapter preferenceChoiceAdapter;
 
     public PreferenceChoice(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -87,9 +87,7 @@ public class PreferenceChoice extends Preference {
             itemList.add(new PreferenceChoiceItem(mEntries[i], mEntryValues[i], i));
         }
 
-        Log.d("AUX_LOG", mEntries.length + "");
-
-        final PreferenceChoiceAdapter preferenceChoiceAdapter = new PreferenceChoiceAdapter(R.layout.pref_choice_item, itemList);
+        preferenceChoiceAdapter = new PreferenceChoiceAdapter(R.layout.pref_choice_item, itemList);
         final RecyclerView recyclerView = (RecyclerView) holder.findViewById(R.id.prefRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(preferenceChoiceAdapter);
@@ -112,6 +110,12 @@ public class PreferenceChoice extends Preference {
     @Override
     public boolean isSelectable() {
         return false;
+    }
+
+    @Override
+    public void updatePreferenceView() {
+        preferenceChoiceAdapter.prefValue = getPrefValue();
+        preferenceChoiceAdapter.notifyDataSetChanged();
     }
 
     public interface OnPrefChoiceSelectedListener {

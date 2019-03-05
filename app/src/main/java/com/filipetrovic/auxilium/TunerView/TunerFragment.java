@@ -263,7 +263,6 @@ public class TunerFragment extends Fragment {
             binding.setCurrentNotePlaying(soundPlayer.currentNote);
 
             if(dialogUnavailableMicrophone == null) {
-                Log.d("AUX_LOG", "DIALOG IS NULL");
                 dialogUnavailableMicrophone = DialogUnavailableMicrophone.newInstance();
             }
             dialogUnavailableMicrophone.setOnDismissListener(new DialogUnavailableMicrophone.onDismissListener() {

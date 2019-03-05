@@ -69,7 +69,5 @@ public class TunerModePlayingBlock extends RelativeLayout {
         } else {
             ((TextView) view.findViewById(R.id.tvNote)).setText(note.get());
         }
-
-
     }
 }

@@ -38,4 +38,7 @@
         android:defaultValue="@bool/pref_suppressor_default"
         app:title="@string/pref_suppressor_title"
         app:summary="@string/pref_suppressor_summary" />
+
+    <com.filipetrovic.auxilium.Settings.PreferenceReset
+        android:key="tuner_reset"/>
 </android.support.v7.preference.PreferenceScreen>

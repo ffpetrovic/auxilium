@@ -83,7 +83,6 @@ public class Note {
     private static int indexOfNote(String[] a, String s) {
         int index = -1;
         for (int i=0;i<a.length;i++) {
-            Log.d("AUX_LOG", a[i] + " " + s);
             if (a[i].equals(s)) {
                 index = i;
                 break;

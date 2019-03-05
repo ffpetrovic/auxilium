@@ -43,12 +43,12 @@
             android:tint="@android:color/white"
             android:background="@drawable/round_selector"
             app:srcCompat="@drawable/ic_close"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginEnd="20dp"/>
     </LinearLayout>
     <fragment
         android:id="@+id/fragment_tuner_view"
         android:name="com.filipetrovic.auxilium.Settings.SettingsFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         />
 </LinearLayout>

@@ -26,8 +26,6 @@ public class TunerOptions {
         naming = SharedPreferencesHelper
                 .getSharedPreferenceString(context, "tuner_naming",
                         context.getResources().getString(R.string.pref_naming_default));
-
-        Log.d("AUX_LOG", naming +"");
     }
 
     public String[] getNotes() {

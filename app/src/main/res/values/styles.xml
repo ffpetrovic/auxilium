@@ -75,6 +75,11 @@
         <item name="android:background">@drawable/rect_selector</item>
     </style>
 
+    <style name="AppTheme.ButtonView">
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
     <style name="AppTheme.Preference">
     </style>
 

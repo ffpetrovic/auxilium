@@ -125,7 +125,6 @@ public class Tuner {
                 suppressor = null;
             }
         }
-        Log.d("AUX_LOG", "Tuner: STOPPED");
 //        dispatcher = null;
 //        dispatcher.stop();
 //        dispatcher = null;

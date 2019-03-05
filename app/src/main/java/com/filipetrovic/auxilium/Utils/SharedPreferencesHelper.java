@@ -75,4 +75,11 @@ public class SharedPreferencesHelper {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         return settings.getBoolean(key, defValue);
     }
+
+    public static void clear(Context context) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.clear();
+        editor.apply();
+    }
 }

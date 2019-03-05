@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="120dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@drawable/button_bg"
+    android:gravity="center"
+    style="@style/AppTheme.ButtonView">
+    <TextView
+        android:id="@+id/button"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/spacegrotesk_semibold"
+        android:textColor="@color/colorWhite"
+        android:text="Button Text" />
+</LinearLayout>
