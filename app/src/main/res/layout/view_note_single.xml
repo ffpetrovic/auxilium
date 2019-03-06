@@ -8,10 +8,10 @@
             name="result"
             type="String" />
         <variable
-            name="note"
+            name="noteCurrent"
             type="com.filipetrovic.auxilium.TunerUtils.Note" />
         <variable
-            name="currentNotePlaying"
+            name="notePlayingAudio"
             type="ObservableField&lt;String&gt;" />
         <variable name="isInTune" type="android.databinding.ObservableBoolean"/>
     </data>
@@ -26,11 +26,11 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{currentNotePlaying.get().equals(note.toString()) ? View.VISIBLE : View.GONE}">
+            android:visibility="@{notePlayingAudio.get().equals(noteCurrent.toString()) ? View.VISIBLE : View.GONE}">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:tint="@color/colorGreen"
+                android:tint="@color/colorAccent"
                 android:src="@drawable/ic_note_circle_playing_bg" />
             <TextView
                 android:layout_width="wrap_content"
@@ -39,15 +39,15 @@
                 android:fontFamily="@font/spacegrotesk_bold"
                 android:gravity="center"
                 android:textSize="16dp"
-                android:textColor="@color/colorGreenDark"
+                android:textColor="@color/colorAccentDark"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:text="@{note.getTranslatedNote()}" />
+                android:text="@{noteCurrent.getTranslatedNote()}" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{(!isInTune &amp;&amp; !result.equals(note.toString()) &amp;&amp; !currentNotePlaying.equals(note.toString())) ? View.VISIBLE : View.GONE}">
+            android:visibility="@{(!isInTune &amp;&amp; !result.equals(noteCurrent.toString()) &amp;&amp; !notePlayingAudio.equals(noteCurrent.toString())) ? View.VISIBLE : View.GONE}">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -65,7 +65,7 @@
                 android:textColor="@color/colorWhite"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:text="@{note.getTranslatedNote()}" />
+                android:text="@{noteCurrent.getTranslatedNote()}" />
         </RelativeLayout>
 
 
@@ -73,7 +73,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{!isInTune &amp;&amp; result.equals(note.toString()) &amp;&amp; !currentNotePlaying.equals(note.toString()) ? View.VISIBLE : View.GONE}">
+            android:visibility="@{!isInTune &amp;&amp; result.equals(noteCurrent.toString()) &amp;&amp; !notePlayingAudio.equals(noteCurrent.toString()) ? View.VISIBLE : View.GONE}">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -89,41 +89,41 @@
                 android:textColor="@color/colorWhite"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:text="@{note.getTranslatedNote()}" />
+                android:text="@{noteCurrent.getTranslatedNote()}" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{isInTune &amp;&amp; !result.equals(note.toString()) &amp;&amp; !currentNotePlaying.equals(note.toString()) ? View.VISIBLE : View.GONE}">
+            android:visibility="@{isInTune &amp;&amp; !result.equals(noteCurrent.toString()) &amp;&amp; !notePlayingAudio.equals(noteCurrent.toString()) ? View.VISIBLE : View.GONE}">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:tint="@color/colorGreen"
+                android:tint="@color/colorAccent"
                 android:alpha="0.25"
                 android:src="@drawable/ic_note_circle_bg" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/spacegrotesk_bold"
+                android:fontFamily="@font/spacegrotesk_medium"
                 android:gravity="center"
-                android:alpha="0.6"
+                android:alpha="1"
                 android:textSize="16dp"
-                android:textColor="@color/colorGreen"
+                android:textColor="@color/colorAccent"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:text="@{note.getTranslatedNote()}" />
+                android:text="@{noteCurrent.getTranslatedNote()}" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{isInTune &amp;&amp; result.equals(note.toString()) &amp;&amp; !currentNotePlaying.equals(note.toString()) ? View.VISIBLE : View.GONE}">
+            android:visibility="@{isInTune &amp;&amp; result.equals(noteCurrent.toString()) &amp;&amp; !notePlayingAudio.equals(noteCurrent.toString()) ? View.VISIBLE : View.GONE}">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:tint="@color/colorGreen"
+                android:tint="@color/colorAccent"
                 android:src="@drawable/ic_note_circle_bg" />
             <TextView
                 android:layout_width="wrap_content"
@@ -132,10 +132,10 @@
                 android:fontFamily="@font/spacegrotesk_bold"
                 android:gravity="center"
                 android:textSize="16dp"
-                android:textColor="@color/colorGreen"
+                android:textColor="@color/colorAccent"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:text="@{note.getTranslatedNote()}" />
+                android:text="@{noteCurrent.getTranslatedNote()}" />
         </RelativeLayout>
 
     </LinearLayout>

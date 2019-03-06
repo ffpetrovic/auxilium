@@ -68,10 +68,10 @@ public class TunerNotesCollectionBlock extends LinearLayout {
                 binding.getRoot().findViewById(R.id.viewRoot).setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        collectionBlockView.getNoteClickToPlayEvent().onEvent(binding.getNote().getRealNote() + binding.getNote().getOctave());
+                        collectionBlockView.getNoteClickToPlayEvent().onEvent(binding.getNoteCurrent().getRealNote() + binding.getNoteCurrent().getOctave());
                     }
                 });
-                binding.setNote(n);
+                binding.setNoteCurrent(n);
                 binding.setIsInTune(n.isInTune);
             }
         }
@@ -95,11 +95,11 @@ public class TunerNotesCollectionBlock extends LinearLayout {
                 Note parsedNote = Note.parse(note.get(), new TunerOptions(collectionBlockView.getContext()));
                 String localizedNote = parsedNote.getTranslatedNote() + parsedNote.getOctave();
                 for(ViewNoteSingleBinding noteViewBinding : collectionBlockView.noteViewBindings) {
-                    noteViewBinding.setCurrentNotePlaying(new ObservableField<>(localizedNote));
+                    noteViewBinding.setNotePlayingAudio(new ObservableField<>(localizedNote));
                 }
             } else {
                 for(ViewNoteSingleBinding noteViewBinding : collectionBlockView.noteViewBindings) {
-                    noteViewBinding.setCurrentNotePlaying(note);
+                    noteViewBinding.setNotePlayingAudio(note);
                 }
             }
 
@@ -109,7 +109,7 @@ public class TunerNotesCollectionBlock extends LinearLayout {
     @BindingAdapter({"android:isNoteViewInTune"})
     public static void setisNoteViewInTune(TextView view, ObservableBoolean isInTune) {
         if(isInTune.get()) {
-            view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorGreen));
+            view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
             CustomFontHelper.setCustomFont(view, "font/spacegrotesk_bold.otf", view.getContext());
         }
     }

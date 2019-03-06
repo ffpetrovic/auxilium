@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#010709</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#00CBA9</color>
-    <!--<color name="colorAccent">#FF4081</color>-->
+    <color name="colorPrimary">#08121D</color>
+    <color name="colorPrimaryDark">#08121D</color>
+    <color name="colorPrimaryLight">#111D2D</color>
+    <color name="colorAccent">@color/colorBlue</color>
+    <color name="colorAccentDark">@color/colorBlueDark</color>
+    <color name="colorAccentTranslucent">@color/colorBlueTranslucent</color>
+    <color name="colorAccentTransparent">@color/colorBlueTransparent</color>
+    <color name="colorAccentFade">@color/colorBlueFade</color>
     <color name="colorGreen">#00CBA9</color>
-    <color name="colorRed">#FF328B</color>
+    <color name="colorBlue">#61C9C8</color>
+    <color name="colorBlueDark">#256A69</color>
+    <color name="colorRed">#FF2851</color>
     <color name="colorWhite">#F2F4F4</color>
     <color name="colorGray">#333333</color>
     <color name="colorTextLight">#9EA1A7</color>
     <color name="colorBackgroundLight">#252A2C</color>
-    <color name="colorTextSecondary">#666666</color>
+    <color name="colorTextSecondary">#44FFFFFF</color>
     <color name="colorWhiteTransparent">#00F2F4F4</color>
     <color name="colorGrayTransparent">#00333333</color>
     <color name="colorGreenTransparent">#0000CBA9</color>
-    <color name="colorRedTransparent">#00FF328B</color>
+    <color name="colorRedTransparent">#00FF2851</color>
+    <color name="colorBlueTransparent">#0061C9C8</color>
     <color name="colorWhiteFade">#22F2F4F4</color>
     <color name="colorWhiteTranslucent">#11F2F4F4</color>
     <color name="colorGrayTranslucent">#66333333</color>
     <color name="colorGreenTranslucent">#1800CBA9</color>
+    <color name="colorBlueTranslucent">#1861C9C8</color>
     <color name="colorGreenFade">#5500CBA9</color>
-    <color name="colorRedTranslucent">#18FF328B</color>
+    <color name="colorBlueFade">#5561C9C8</color>
+    <color name="colorRedTranslucent">#18FF2851</color>
     <color name="colorGreenDark">#185A4F</color>
 
 </resources>

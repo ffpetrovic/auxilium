@@ -169,12 +169,6 @@ public class TunerFragment extends Fragment {
     }
 
     private void setupUI() {
-        binding.navigationBlockAutomatic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         binding.navigationBlockPick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

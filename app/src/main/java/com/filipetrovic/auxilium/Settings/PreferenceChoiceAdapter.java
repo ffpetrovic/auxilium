@@ -47,7 +47,7 @@ public class PreferenceChoiceAdapter extends RecyclerView.Adapter<PreferenceChoi
 
         if(prefValue.equals(currentItem.getValue())) {
             holder.root.setBackground(holder.root.getContext().getDrawable(R.drawable.pref_item_bg_active));
-            holder.item.setTextColor(holder.root.getContext().getColor(R.color.colorGreen));
+            holder.item.setTextColor(holder.root.getContext().getColor(R.color.colorAccent));
         } else {
             holder.root.setBackground(holder.root.getContext().getDrawable(R.drawable.pref_item_bg));
             holder.item.setTextColor(holder.root.getContext().getColor(R.color.colorTextSecondary));

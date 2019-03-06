@@ -163,7 +163,7 @@
             android:layout_weight="0"
             android:gravity="center_vertical"
             android:visibility="@{tuner.tunerMode.isChromatic() ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@+id/navigation_block_automatic">
+            app:layout_constraintBottom_toTopOf="@+id/navigation_block_pick">
 
             <TextView
                 android:layout_width="0dp"
@@ -179,7 +179,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:tint="@color/colorGreen"
+                android:tint="@color/colorAccent"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_check_circle"
                 app:layout_constraintStart_toStartOf="parent"
@@ -259,7 +259,7 @@
             android:visibility="@{!tuner.tunerMode.isChromatic() ? View.VISIBLE : View.GONE}"
             app:currentNote="@{result.getNoteLabelWithAugAndOctave()}"
             app:currentNotePlaying="@{currentNotePlaying}"
-            app:layout_constraintBottom_toTopOf="@+id/navigation_block_automatic"
+            app:layout_constraintBottom_toTopOf="@+id/navigation_block_pick"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:background="@drawable/collection_block_bg"
@@ -300,22 +300,22 @@
         <!--</LinearLayout>-->
         <!--</LinearLayout>-->
         <!-- Navigation Bar -->
-        <com.filipetrovic.auxilium.TunerView.TunerNavigationBlock
-            android:id="@+id/navigation_block_automatic"
-            android:layout_width="0dp"
-            android:layout_height="64dp"
-            android:background="@drawable/rect_selector"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/navigation_block_pick"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:nbGroupText="@{``}"
-            app:nbImage="@{@drawable/ic_mode_automatic}"
-            app:nbImageActive="@{@drawable/ic_mode_automatic_active}"
-            app:nbIsActive="@{tuner.tunerMode.isChromatic()}"
-            app:nbText="@{`Automatic`}" />
+        <!--<com.filipetrovic.auxilium.TunerView.TunerNavigationBlock-->
+            <!--android:id="@+id/navigation_block_pick"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="64dp"-->
+            <!--android:background="@drawable/rect_selector"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toStartOf="@+id/navigation_block_automatic"-->
+            <!--app:layout_constraintHorizontal_bias="0.5"-->
+            <!--app:layout_constraintHorizontal_chainStyle="spread_inside"-->
+            <!--app:layout_constraintHorizontal_weight="1"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:nbGroupText="@{``}"-->
+            <!--app:nbImage="@{@drawable/ic_mode_automatic}"-->
+            <!--app:nbImageActive="@{@drawable/ic_mode_automatic_active}"-->
+            <!--app:nbIsActive="@{tuner.tunerMode.isChromatic()}"-->
+            <!--app:nbText="@{`Automatic`}" />-->
 
         <com.filipetrovic.auxilium.TunerView.TunerNavigationBlock
             android:id="@+id/navigation_block_pick"
@@ -324,9 +324,10 @@
             android:background="@drawable/rect_selector"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@+id/navigation_block_automatic"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
             app:nbGroupText="@{tuner.tunerMode.group}"
             app:nbImage="@{@drawable/ic_mode_pick}"
             app:nbImageActive="@{@drawable/ic_mode_pick_active}"
@@ -343,7 +344,7 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="64dp"
             android:layout_marginBottom="60dp"
-            app:layout_constraintBottom_toTopOf="@+id/navigation_block_automatic"
+            app:layout_constraintBottom_toTopOf="@+id/navigation_block_pick"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -354,9 +355,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:fontFamily="@font/spacegrotesk_regular"
+                android:fontFamily="@font/spacegrotesk_light"
                 android:text="@{result.getNoteLabel()}"
-                android:textColor="#535353"
+                android:textColor="@color/colorTextSecondary"
                 android:textSize="128dp"
                 app:isTunerResultVisible="@{!result.isEmpty() &amp;&amp; currentNotePlaying.equals(``)}" />
 
@@ -367,9 +368,9 @@
                 android:layout_above="@id/tvOctave"
                 android:layout_toRightOf="@id/tvNote"
                 android:background="@android:color/transparent"
-                android:fontFamily="@font/spacegrotesk_medium"
+                android:fontFamily="@font/spacegrotesk_regular"
                 android:text="@{result.getNoteAug()}"
-                android:textColor="#535353"
+                android:textColor="@color/colorTextSecondary"
                 android:textSize="36dp"
                 app:isTunerResultVisible="@{!result.isEmpty() &amp;&amp; currentNotePlaying.equals(``)}"/>
 
@@ -381,9 +382,9 @@
                 android:layout_marginRight="15dp"
                 android:layout_toRightOf="@id/tvNote"
                 android:background="@android:color/transparent"
-                android:fontFamily="@font/spacegrotesk_semibold"
+                android:fontFamily="@font/spacegrotesk_regular"
                 android:text="@{result.getOctaveLabel()}"
-                android:textColor="#535353"
+                android:textColor="@color/colorTextSecondary"
                 android:textSize="48dp"
                 app:isTunerResultVisible="@{!result.isEmpty() &amp;&amp; currentNotePlaying.equals(``)}"/>
         </RelativeLayout>
@@ -401,7 +402,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/navigation_block_automatic"
+            app:layout_constraintBottom_toTopOf="@+id/navigation_block_pick"
             app:layout_constraintVertical_bias="0.0" />
 
         <!--<com.filipetrovic.auxilium.TunerView.TunerModesDialog-->

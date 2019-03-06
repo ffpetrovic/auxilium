@@ -50,7 +50,7 @@ public class TunerNavigationBlock extends RelativeLayout {
             ((TextView) view.findViewById(R.id.navigationBlockAutomaticText))
                     .setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorWhite));
 //            ((ImageView) view.findViewById(R.id.navigationBlockImage))
-//                    .setColorFilter(R.color.colorGreen);
+//                    .setColorFilter(R.color.colorAccent);
         } else {
 //            view.findViewById(R.id.navigationBlockRoot).animate().alpha(.2f).setDuration(150);
 //            view.findViewById(R.id.navigationBlockActiveIndicator).setVisibility(View.GONE);
