@@ -1,6 +1,5 @@
 package com.filipetrovic.auxilium.Settings;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.filipetrovic.auxilium.Dialog.AlertDialog;
 import com.filipetrovic.auxilium.R;
 import com.filipetrovic.auxilium.Utils.SharedPreferencesHelper;
 
@@ -25,9 +25,40 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 new PreferenceReset.OnPreferencesResetListener() {
             @Override
             public void onEvent() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("Are you sure?").setPositiveButton("Yes", null)
-                        .setNegativeButton("No", null).show();
+                final com.filipetrovic.auxilium.Dialog.AlertDialog dialog = new AlertDialog();
+
+                dialog.show(getFragmentManager(), "dialog_reset");
+
+                dialog.setDialogCreatedListener(new AlertDialog.OnDialogCreatedListener() {
+                    @Override
+                    public void onCreate() {
+                        dialog.getDialogContent().setVisibility(View.GONE);
+                        dialog.getDialogTitle().setText("Reset to default?");
+
+                        dialog.getPositiveButton().setText("Reset");
+                        dialog.getPositiveButton().setButtonVariant(getString(R.string.button_variant_danger));
+                        dialog.getPositiveButton().setButtonGhost(true);
+                        dialog.getPositiveButton().updateStyle();
+
+                        dialog.getNegativeButton().setText("Cancel");
+                        dialog.getNegativeButton().setButtonVariant(getString(R.string.button_variant_fade));
+                        dialog.getNegativeButton().setButtonGhost(true);
+                        dialog.getNegativeButton().updateStyle();
+                    }
+                });
+
+                dialog.setDialogResultListener(new AlertDialog.OnDialogResultListener() {
+                    @Override
+                    public void onPositiveResult() {
+                        SharedPreferencesHelper.clear(getContext());
+                        updatePreferences();
+                    }
+
+                    @Override
+                    public void onNegativeResult() {
+
+                    }
+                });
             }
         };
     }

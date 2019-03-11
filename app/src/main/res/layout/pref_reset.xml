@@ -10,5 +10,7 @@
         android:id="@+id/pref_reset_button"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:text="Reset To Default" />
+        app:text="Reset To Default"
+        app:variant="@string/button_variant_danger"
+        app:ghost="true" />
 </LinearLayout>

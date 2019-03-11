@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@color/colorDialogDim"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="20dp">
+    <LinearLayout
+        android:id="@+id/dialog_backdrop"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:id="@+id/dialog_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="start"
+        android:orientation="vertical"
+        android:background="@drawable/dialog_alert_bg"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:clickable="true"
+        android:focusable="true"
+        >
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Dialog Title"
+            android:fontFamily="@font/spacegrotesk_semibold"
+            android:textSize="18sp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/dialog_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorTextLight"
+            android:text="DialogText"
+            android:lineSpacingMultiplier="1.4"
+            android:layout_marginBottom="20dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:fontFamily="@font/spacegrotesk_regular"
+            android:textSize="16sp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.filipetrovic.auxilium.TunerView.Button
+                android:id="@+id/btn_positive"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_height_sm"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                app:variant="@string/button_variant_accent"
+                app:text="Positive" />
+            <com.filipetrovic.auxilium.TunerView.Button
+                android:id="@+id/btn_negative"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/button_height_sm"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                app:variant="@string/button_variant_fade"
+                app:text="Negative" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

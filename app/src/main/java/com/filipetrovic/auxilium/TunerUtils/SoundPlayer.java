@@ -15,60 +15,66 @@ public class SoundPlayer {
     MediaPlayer mPlayer;
     private boolean isPlaying = false;
     private boolean isPlayingNote = false;
+    TunerOptions tunerOptions;
 
     INotePlayerFinished onNotePlayerFinished;
 
     public SoundPlayer(Context c) {
         mContext = c;
+        this.tunerOptions = new TunerOptions(c);
     }
 
     public void playSfxOnStart() {
-        try {
-            if(mPlayer != null) {
-                mPlayer.stop();
-                mPlayer.release();
-                mPlayer = null;
-            }
-            AssetFileDescriptor afd = mContext.getAssets()
-                    .openFd("sounds/aux_app_start.wav");
-            mPlayer = new MediaPlayer();
-            mPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
-            afd.close();
-            mPlayer.prepare();
-            mPlayer.setVolume(1f, 1f);
+        if(tunerOptions.sfx) {
+            try {
+                if(mPlayer != null) {
+                    mPlayer.stop();
+                    mPlayer.release();
+                    mPlayer = null;
+                }
+                AssetFileDescriptor afd = mContext.getAssets()
+                        .openFd("sounds/aux_app_start.wav");
+                mPlayer = new MediaPlayer();
+                mPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+                afd.close();
+                mPlayer.prepare();
+                mPlayer.setVolume(1f, 1f);
 //            mPlayer.setLooping(true);
-            mPlayer.start();
-        } catch(Exception e) {
-            Log.e("AUX_LOG", e.toString());
+                mPlayer.start();
+            } catch(Exception e) {
+                Log.e("AUX_LOG", e.toString());
+            }
         }
     }
 
     public void playSfxCorrectResult() {
-        try {
-            if(mPlayer != null) {
-                mPlayer.stop();
-                mPlayer.release();
-                mPlayer = null;
-                isPlaying = false;
-            }
-            AssetFileDescriptor afd = mContext.getAssets()
-                    .openFd("sounds/aux_result_correct.wav");
-            mPlayer = new MediaPlayer();
-            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
+        if(tunerOptions.sfx) {
+            try {
+                if(mPlayer != null) {
+                    mPlayer.stop();
+                    mPlayer.release();
+                    mPlayer = null;
                     isPlaying = false;
                 }
-            });
-            mPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
-            afd.close();
-            mPlayer.prepare();
-            mPlayer.setVolume(1f, 1f);
+                AssetFileDescriptor afd = mContext.getAssets()
+                        .openFd("sounds/aux_result_correct.wav");
+                mPlayer = new MediaPlayer();
+                mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        isPlaying = false;
+                    }
+                });
+                mPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
+                afd.close();
+                mPlayer.prepare();
+                mPlayer.setVolume(1f, 1f);
 //            mPlayer.setLooping(true);
-            mPlayer.start();
-            isPlaying = true;
-        } catch(Exception e) {
-            Log.e("AUX_LOG", e.toString());
+                mPlayer.start();
+                isPlaying = true;
+            } catch(Exception e) {
+                Log.e("AUX_LOG", e.toString());
+            }
         }
     }
 

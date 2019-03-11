@@ -10,6 +10,8 @@ public class TunerOptions {
     public int tunerBase;
     public boolean sharps;
     public String naming;
+    public boolean sfx;
+    public boolean suppressor;
 
     private String[] NOTES_ENGLISH_SHARPS = new String[] {"C","C#","D","D#","E","F","F#","G","G#","A","A#","B"};
     private String[] NOTES_ENGLISH_FLATS = new String[] {"C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"};
@@ -26,6 +28,14 @@ public class TunerOptions {
         naming = SharedPreferencesHelper
                 .getSharedPreferenceString(context, "tuner_naming",
                         context.getResources().getString(R.string.pref_naming_default));
+
+        sfx = SharedPreferencesHelper
+                .getSharedPreferenceBoolean(context, "tuner_sfx",
+                        context.getResources().getBoolean(R.bool.pref_sfx_default));
+
+        suppressor = SharedPreferencesHelper
+                .getSharedPreferenceBoolean(context, "tuner_suppressor",
+                        context.getResources().getBoolean(R.bool.pref_suppressor_default));
     }
 
     public String[] getNotes() {

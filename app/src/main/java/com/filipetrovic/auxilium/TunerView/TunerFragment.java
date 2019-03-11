@@ -5,6 +5,7 @@ import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
+import com.filipetrovic.auxilium.Dialog.AlertDialog;
 import com.filipetrovic.auxilium.Interface.INoteClickToPlayEvent;
 import com.filipetrovic.auxilium.Interface.INotePlayerFinished;
 import com.filipetrovic.auxilium.MainActivity;
@@ -28,41 +30,26 @@ import com.filipetrovic.auxilium.Utils.SharedPreferencesHelper;
 import com.filipetrovic.auxilium.databinding.FragmentTunerBinding;
 
 public class TunerFragment extends Fragment {
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
+    private MainActivity activity;
     private Tuner tuner;
     private FragmentTunerBinding binding;
-    private float pPerc;
-    private MainActivity activity;
+
 
     private SoundPlayer soundPlayer;
-
+    private boolean startSfxPlayed = false;
     INoteClickToPlayEvent noteClickToPlayEvent;
-    DialogUnavailableMicrophone dialogUnavailableMicrophone;
 
     public TunerFragment() {}
-    public static TunerFragment newInstance(String param1, String param2) {
-        return new TunerFragment();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        soundPlayer = new SoundPlayer(getContext());
-    }
-
-    public void resetTuner(View v) {
-        stop();
-        start();
     }
 
     public void initTuner() {
         String tunerModeString =
                 SharedPreferencesHelper.getSharedPreferenceString(getContext(), "selectedTunerMode", getString(R.string.tuner_mode_default));
-        TunerOptions tunerOptions = new TunerOptions(getContext());
         TunerMode tunerMode = TunerMode.valueOf(tunerModeString, getContext());
         tuner = new Tuner(getContext(), tunerMode);
         tuner.setSoundPlayer(soundPlayer);
@@ -70,38 +57,52 @@ public class TunerFragment extends Fragment {
         binding.setCurrentNotePlaying(soundPlayer.currentNote);
     }
 
+    private void initFakeTuner() {
+        tuner = new Tuner(getContext(), TunerMode.getChromaticMode(getContext()));
+        tuner.isFake = true;
+        binding.setTuner(tuner);
+        TunerResult fakeTunerResult =
+                new TunerResult(0.00, tuner.tunerMode.getNotesObjects(), new TunerOptions(getContext()));
+        binding.setResult(fakeTunerResult);
+        binding.setCurrentNotePlaying(soundPlayer.currentNote);
+    }
+
     private void noteFound(final TunerResult note) {
-        if(getActivity() != null) {
+        if(getActivity() != null && !tuner.isMuted()) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(!soundPlayer.isPlaying()) {
-                        binding.setResult(note);
-
-
-                        String statusText = "";
-                        if(note.percentageActual > 50f && note.type == Indicator.INDICATOR_TYPE.ACTIVE) {
-                            statusText = "Too sharp!";
-                        } else if(note.percentageActual < 50f && note.type == Indicator.INDICATOR_TYPE.ACTIVE) {
-                            statusText = "Too flat!";
-                        } else if(note.type == Indicator.INDICATOR_TYPE.CORRECT) {
-                            statusText = "In tune!";
-                        } else if(note.type == Indicator.INDICATOR_TYPE.INACTIVE) {
-                            statusText = "...";
-                        } else if(note.type == Indicator.INDICATOR_TYPE.INCORRECT) {
-                            statusText = "Off by " + Math.abs(50 - Math.round(note.getPercentageActual())) + "%";
-                        }
-                        (binding.tunerStatus).setText(statusText);
-    //
-                        //    //                    pPerc = (float) perc;
-                    }
+                    binding.setResult(note);
                 }
             });
         }
     }
 
+    public void startAttempt() {
+        if(Tuner.checkIfMicrophoneIsAvailable(getContext())) {
+            // Checking if the input is already occupied by another app.
+            setupUI();
+            start();
+
+            // On App Start SFX
+            if(!startSfxPlayed) {
+                soundPlayer.playSfxOnStart();
+                startSfxPlayed = true;
+            }
+        } else if((tuner == null || tuner.isFake) || (!tuner.isRecording)) {
+            // Checking if we've already created a placeholder tuner
+            // OR if a tuner already exists but isn't recording
+            initFakeTuner();
+            showBusyMicrophoneDialog();
+        }
+    }
+
     public void start() {
         // Visual only
+        if(tuner != null && !tuner.isFake && tuner.isRecording) {
+            return;
+        }
+        Log.d("AUX_LOG", "TUNER START");
         initTuner();
         binding.tunerLine.setPercentage(50f);
         tuner.start();
@@ -120,6 +121,75 @@ public class TunerFragment extends Fragment {
             tuner.stop();
             tuner.destroy();
         }
+    }
+
+    private void setupUI() {
+        binding.navigationBlockPick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isRecording()) {
+                    stop();
+                }
+                activity.openModes();
+            }
+        });
+        noteClickToPlayEvent = new INoteClickToPlayEvent() {
+            @Override
+            public void onEvent(String note) {
+                tuner.sendNullResult();
+                soundPlayer.playNote(note);
+                tuner.setMuted(soundPlayer.isPlayingNote());
+            }
+        };
+        binding.notesCollectionBlock.setNoteClickToPlayEvent(noteClickToPlayEvent);
+        soundPlayer.setOnNotePlayerFinished(new INotePlayerFinished() {
+            @Override
+            public void onEvent() {
+                binding.tunerPlayingBlock.stopAnimation();
+                if(soundPlayer.isPlaying()) {
+                    binding.tunerPlayingBlock.startAnimation();
+                }
+            }
+        });
+        binding.tunerPlayingBlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                soundPlayer.playNote("");
+                tuner.setMuted(false);
+            }
+        });
+    }
+
+    private void showBusyMicrophoneDialog() {
+        final com.filipetrovic.auxilium.Dialog.AlertDialog dialog = new AlertDialog();
+
+        dialog.show(getFragmentManager(), "dialog_busy_microphone");
+
+        dialog.setDialogCreatedListener(new AlertDialog.OnDialogCreatedListener() {
+            @Override
+            public void onCreate() {
+                dialog.getDialogTitle().setText("No Microphone Access");
+                dialog.getDialogContent().setText("Looks like Auxilium can't access your microphone. Check if another app is using it, close it then tap 'Try again'.");
+
+                dialog.getPositiveButton().setText("Try Again");
+                dialog.getPositiveButton().setButtonVariant(getString(R.string.button_variant_white));
+                dialog.getPositiveButton().updateStyle();
+
+                dialog.getNegativeButton().setVisibility(View.GONE);
+            }
+        });
+
+        dialog.setDialogResultListener(new AlertDialog.OnDialogResultListener() {
+            @Override
+            public void onPositiveResult() {
+                startAttempt();
+            }
+
+            @Override
+            public void onNegativeResult() {
+                startAttempt();
+            }
+        });
     }
 
     public boolean isRecording() {
@@ -168,43 +238,6 @@ public class TunerFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void setupUI() {
-        binding.navigationBlockPick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(isRecording()) {
-                    stop();
-                }
-                activity.openModes();
-            }
-        });
-        noteClickToPlayEvent = new INoteClickToPlayEvent() {
-            @Override
-            public void onEvent(String note) {
-                tuner.sendNullResult();
-                soundPlayer.playNote(note);
-                tuner.setMuted(soundPlayer.isPlayingNote());
-            }
-        };
-        binding.notesCollectionBlock.setNoteClickToPlayEvent(noteClickToPlayEvent);
-        soundPlayer.setOnNotePlayerFinished(new INotePlayerFinished() {
-            @Override
-            public void onEvent() {
-                binding.tunerPlayingBlock.stopAnimation();
-                if(soundPlayer.isPlaying()) {
-                    binding.tunerPlayingBlock.startAnimation();
-                }
-            }
-        });
-        binding.tunerPlayingBlock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                soundPlayer.playNote("");
-                tuner.setMuted(false);
-            }
-        });
-    }
-
 
     @Override
     public void onAttach(Context context) {
@@ -223,6 +256,7 @@ public class TunerFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        soundPlayer = new SoundPlayer(getContext());
         startAttempt();
     }
 
@@ -231,48 +265,6 @@ public class TunerFragment extends Fragment {
         super.onPause();
         stop();
     }
-
-    public void startAttempt() {
-        if(Tuner.checkIfMicrophoneIsAvailable(getContext())) {
-            // Checking if the input is already occupied by another app.
-            setupUI();
-            start();
-
-            // Uncomment to play SFX on app start
-            // soundPlayer.playSfxOnStart();
-
-            if(dialogUnavailableMicrophone != null && dialogUnavailableMicrophone.isVisible()) {
-                // Closing the dialog if it's visible and the input is available.
-                dialogUnavailableMicrophone.dismiss();
-            }
-        } else if((tuner == null || tuner.isFake) || (!tuner.isRecording)) {
-            // Checking if we've already created a placeholder tuner
-            // OR if a tuner already exists but isn't recording
-            tuner = new Tuner(getContext(), TunerMode.getChromaticMode(getContext()));
-            tuner.isFake = true;
-            binding.setTuner(tuner);
-            TunerResult fakeTunerResult =
-                    new TunerResult(0.00, tuner.tunerMode.getNotesObjects(), new TunerOptions(getContext()));
-            binding.setResult(fakeTunerResult);
-            binding.setCurrentNotePlaying(soundPlayer.currentNote);
-
-            if(dialogUnavailableMicrophone == null) {
-                dialogUnavailableMicrophone = DialogUnavailableMicrophone.newInstance();
-            }
-            dialogUnavailableMicrophone.setOnDismissListener(new DialogUnavailableMicrophone.onDismissListener() {
-                @Override
-                public void onDismiss() {
-                    startAttempt();
-                }
-            });
-            if(!dialogUnavailableMicrophone.isAdded()) {
-                dialogUnavailableMicrophone.show(getFragmentManager(), "fragment_busy_microphone");
-            } else {
-                dialogUnavailableMicrophone.getDialog().show();
-            }
-        }
-    }
-
 
     @BindingAdapter({"app:isTunerResultVisible"})
     public static void setIsTunerResultVisible(final View v, boolean isActive) {

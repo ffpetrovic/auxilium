@@ -3,6 +3,7 @@
     <color name="colorPrimary">#08121D</color>
     <color name="colorPrimaryDark">#08121D</color>
     <color name="colorPrimaryLight">#111D2D</color>
+    <color name="colorPrimaryFade">#AA08121D</color>
     <color name="colorAccent">@color/colorBlue</color>
     <color name="colorAccentDark">@color/colorBlueDark</color>
     <color name="colorAccentTranslucent">@color/colorBlueTranslucent</color>
@@ -27,9 +28,15 @@
     <color name="colorGrayTranslucent">#66333333</color>
     <color name="colorGreenTranslucent">#1800CBA9</color>
     <color name="colorBlueTranslucent">#1861C9C8</color>
+    <color name="colorRedFade">#33FF2851</color>
     <color name="colorGreenFade">#5500CBA9</color>
     <color name="colorBlueFade">#5561C9C8</color>
     <color name="colorRedTranslucent">#18FF2851</color>
     <color name="colorGreenDark">#185A4F</color>
 
+    <color name="colorDanger">@color/colorRed</color>
+    <color name="colorDangerFade">@color/colorRedFade</color>
+    <color name="colorDangerTranslucent">@color/colorRedTranslucent</color>
+    <color name="colorDangerTransparent">@color/colorRedTransparent</color>
+    <color name="colorDialogDim">@color/colorPrimaryFade</color>
 </resources>

@@ -46,7 +46,7 @@
             android:fontFamily="@font/spacegrotesk_bold"
             android:gravity="center"
             android:letterSpacing="0.1"
-            android:text="..."
+            android:text="@{result.statusText}"
             android:textAllCaps="true"
             android:textColor="@color/colorWhite"
             android:textSize="12dp"
@@ -68,7 +68,6 @@
         <!--android:id="@+id/tvFrequency"/>-->
 
         <ImageView
-            android:id="@+id/imageView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -81,7 +80,6 @@
             app:srcCompat="@drawable/indicator_middle" />
 
         <ImageView
-            android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="64dp"
@@ -94,7 +92,6 @@
             app:srcCompat="@drawable/ic_sharp" />
 
         <ImageView
-            android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
@@ -255,7 +252,7 @@
             android:paddingBottom="5dp"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="16dp"
             android:visibility="@{!tuner.tunerMode.isChromatic() ? View.VISIBLE : View.GONE}"
             app:currentNote="@{result.getNoteLabelWithAugAndOctave()}"
             app:currentNotePlaying="@{currentNotePlaying}"
@@ -316,7 +313,17 @@
             <!--app:nbImageActive="@{@drawable/ic_mode_automatic_active}"-->
             <!--app:nbIsActive="@{tuner.tunerMode.isChromatic()}"-->
             <!--app:nbText="@{`Automatic`}" />-->
-
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/navigation_block_pick"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:tint="@color/colorWhiteTranslucent"
+            app:srcCompat="@drawable/border_horizontal" />
         <com.filipetrovic.auxilium.TunerView.TunerNavigationBlock
             android:id="@+id/navigation_block_pick"
             android:layout_width="0dp"
@@ -329,10 +336,8 @@
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             app:nbGroupText="@{tuner.tunerMode.group}"
-            app:nbImage="@{@drawable/ic_mode_pick}"
-            app:nbImageActive="@{@drawable/ic_mode_pick_active}"
-            app:nbIsActive="@{!tuner.tunerMode.isChromatic()}"
-            app:nbText="@{tuner.tunerMode.isChromatic() ? `Pick Mode` : tuner.tunerMode.name}" >
+            app:nbImage="@{@drawable/ic_mode_pick_active}"
+            app:nbText="@{tuner.tunerMode.getNameLabel()}" >
 
         </com.filipetrovic.auxilium.TunerView.TunerNavigationBlock>
 

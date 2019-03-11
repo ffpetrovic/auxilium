@@ -27,5 +27,7 @@
 
     <declare-styleable name="Button">
         <attr name="text" format="string" />
+        <attr name="variant" format="string" />
+        <attr name="ghost" format="boolean" />
     </declare-styleable>
 </resources>

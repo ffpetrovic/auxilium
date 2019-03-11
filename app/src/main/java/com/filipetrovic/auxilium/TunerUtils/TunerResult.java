@@ -8,6 +8,7 @@ public class TunerResult {
     public double percentageActual;
     public String note;
     private TunerOptions tunerOptions;
+    public String statusText = "";
 
     public String getNote() {
         return note;
@@ -118,7 +119,6 @@ public class TunerResult {
                 index = i;
                 dist = d;
             }
-//            Log.d("AUX_LOG", notesMatch[i].frequency + "");
         }
         Note mNote = notesMatch[index];
         this.octave = mNote.octave;
@@ -170,6 +170,18 @@ public class TunerResult {
             this.frequency = 0.0f;
 //            this.percentage = 50.0;
             this.type = Indicator.INDICATOR_TYPE.INACTIVE;
+        }
+
+        if(percentageActual > 50f && type == Indicator.INDICATOR_TYPE.ACTIVE) {
+            this.statusText = "Too sharp!";
+        } else if(percentageActual < 50f && type == Indicator.INDICATOR_TYPE.ACTIVE) {
+            this.statusText = "Too flat!";
+        } else if(type == Indicator.INDICATOR_TYPE.CORRECT) {
+            this.statusText = "In tune!";
+        } else if(type == Indicator.INDICATOR_TYPE.INACTIVE) {
+            this.statusText = "...";
+        } else if(type == Indicator.INDICATOR_TYPE.INCORRECT) {
+            this.statusText = "Off by " + Math.abs(50 - Math.round(getPercentageActual())) + "%";
         }
     }
 

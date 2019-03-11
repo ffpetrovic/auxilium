@@ -94,9 +94,11 @@ public class Tuner {
             initPitch(sampleRate, bufferSize);
             audioRecord = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, sampleRate, AudioFormat.CHANNEL_IN_DEFAULT,
                     AudioFormat.ENCODING_PCM_16BIT, bufferSize);
-            if(NoiseSuppressor.isAvailable()) {
+
+            if(NoiseSuppressor.isAvailable() && options.suppressor) {
                 suppressor = NoiseSuppressor.create(audioRecord.getAudioSessionId());
             }
+
             audioRecord.startRecording();
             audioThread = new Thread(new Runnable() {
                 //Runs off the UI thread

@@ -16,7 +16,7 @@
         <!--android:layout_marginBottom="-3dp"/>-->
     <LinearLayout
         android:id="@+id/navigationBlockRoot"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:paddingStart="20dp"
@@ -33,29 +33,16 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="10dp"
             android:layout_weight="1">
-            <TextView
-                android:id="@+id/navigationBlockAutomaticText"
-                android:textSize="16dp"
-                android:fontFamily="@font/spacegrotesk_bold"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="0dp"
-                android:gravity="center_vertical"
-                android:visibility="gone"
-                android:text="Tuning"
-                android:layout_marginBottom="-4dp"/>
             <TextView
                 android:id="@+id/navigationBlockSpecificText"
                 android:textSize="16dp"
                 android:fontFamily="@font/spacegrotesk_bold"
                 android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="0dp"
-                android:gravity="bottom"
+                android:layout_height="wrap_content"
                 android:text="Tuning" />
             <TextView
                 android:id="@+id/navigationBlockGroupText"
@@ -64,11 +51,16 @@
                 android:textAllCaps="true"
                 android:fontFamily="@font/spacegrotesk_bold"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="top"
+                android:layout_height="wrap_content"
                 android:textColor="@color/colorTextSecondary"
                 android:text="Group" />
         </LinearLayout>
+        <ImageView
+            android:layout_gravity="start|center_vertical"
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:scaleType="fitCenter"
+            android:tint="@color/colorTextSecondary"
+            app:srcCompat="@drawable/ic_arrow_up" />
     </LinearLayout>
 </merge>
