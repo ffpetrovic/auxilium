@@ -168,10 +168,10 @@ public class TunerFragment extends Fragment {
         dialog.setDialogCreatedListener(new AlertDialog.OnDialogCreatedListener() {
             @Override
             public void onCreate() {
-                dialog.getDialogTitle().setText("No Microphone Access");
-                dialog.getDialogContent().setText("Looks like Auxilium can't access your microphone. Check if another app is using it, close it then tap 'Try again'.");
+                dialog.getDialogTitle().setText(getString(R.string.busy_microphone_dialog_title));
+                dialog.getDialogContent().setText(getString(R.string.busy_microphone_dialog_text));
 
-                dialog.getPositiveButton().setText("Try Again");
+                dialog.getPositiveButton().setText(getString(R.string.busy_microphone_dialog_button_text));
                 dialog.getPositiveButton().setButtonVariant(getString(R.string.button_variant_white));
                 dialog.getPositiveButton().updateStyle();
 

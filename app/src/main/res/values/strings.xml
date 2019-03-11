@@ -29,4 +29,9 @@ for loud environments</string>
     <string name="button_variant_accent">btn_accent</string>
     <string name="button_variant_danger">btn_danger</string>
     <string name="button_variant_fade">btn_fade</string>
+
+    <!-- Busy Microphone Dialog strings -->
+    <string name="busy_microphone_dialog_title">No Microphone Access</string>
+    <string name="busy_microphone_dialog_text">Looks like Auxilium can\'t access your microphone. Check if another app is using it, close it then tap \'Try again\'.</string>
+    <string name="busy_microphone_dialog_button_text">Try Again</string>
 </resources>
