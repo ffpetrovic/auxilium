@@ -16,6 +16,7 @@
         <item name="android:textColorSecondaryInverse">@android:color/white</item>
         <item name="android:textColorTertiaryInverse">@android:color/white</item>
         <item name="preferenceTheme">@style/PrefsTheme</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
     <style name="PrefsTheme" parent="PreferenceThemeOverlay.v14.Material">
@@ -29,8 +30,8 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="AppTheme.Activity">
-        <item name="android:background">@color/colorPrimary</item>
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
     <style name="AppTheme.Button" parent="Widget.AppCompat.Button">
