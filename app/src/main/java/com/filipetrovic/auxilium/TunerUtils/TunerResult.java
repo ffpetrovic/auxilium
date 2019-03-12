@@ -172,16 +172,14 @@ public class TunerResult {
             this.type = Indicator.INDICATOR_TYPE.INACTIVE;
         }
 
-        if(percentageActual > 50f && type == Indicator.INDICATOR_TYPE.ACTIVE) {
-            this.statusText = "Too sharp!";
-        } else if(percentageActual < 50f && type == Indicator.INDICATOR_TYPE.ACTIVE) {
-            this.statusText = "Too flat!";
+        if(percentageActual > 50f && (type == Indicator.INDICATOR_TYPE.ACTIVE || type == Indicator.INDICATOR_TYPE.INCORRECT)) {
+            this.statusText = "sharp by " + Math.abs(50 - Math.round(getPercentageActual())) + "%";
+        } else if(percentageActual < 50f && (type == Indicator.INDICATOR_TYPE.ACTIVE || type == Indicator.INDICATOR_TYPE.INCORRECT)) {
+            this.statusText = "flat by " + Math.abs(50 - Math.round(getPercentageActual())) + "%";
         } else if(type == Indicator.INDICATOR_TYPE.CORRECT) {
-            this.statusText = "In tune!";
+            this.statusText = "in tune.";
         } else if(type == Indicator.INDICATOR_TYPE.INACTIVE) {
-            this.statusText = "...";
-        } else if(type == Indicator.INDICATOR_TYPE.INCORRECT) {
-            this.statusText = "Off by " + Math.abs(50 - Math.round(getPercentageActual())) + "%";
+            this.statusText = "aux.";
         }
     }
 

@@ -34,4 +34,12 @@ for loud environments</string>
     <string name="busy_microphone_dialog_title">No Microphone Access</string>
     <string name="busy_microphone_dialog_text">Looks like Auxilium can\'t access your microphone. Check if another app is using it, close it then tap \'Try again\'.</string>
     <string name="busy_microphone_dialog_button_text">Try Again</string>
+
+
+    <!-- Intro Screen -->
+    <string name="intro_title">Welcome!</string>
+    <string name="intro_text">Thanks for using Auxilium! To get started, please grant permission for Microphone Access.</string>
+    <string name="intro_permission_button_text">Grant Microphone Access</string>
+    <string name="intro_permission_denied_msg">"Microphone permissions are needed for the application to work."</string>
+
 </resources>

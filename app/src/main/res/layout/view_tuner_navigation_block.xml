@@ -58,7 +58,7 @@
         <ImageView
             android:layout_gravity="start|center_vertical"
             android:layout_width="12dp"
-            android:layout_height="10dp"
+            android:layout_height="8dp"
             android:scaleType="fitCenter"
             android:tint="@color/colorTextSecondary"
             app:srcCompat="@drawable/ic_arrow_up" />

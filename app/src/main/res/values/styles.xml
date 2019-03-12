@@ -57,6 +57,22 @@
         <!--<item name="android:paddingRight">25dp</item>-->
     </style>
 
+    <style name="AppTheme.Intro">
+    </style>
+
+    <style name="AppTheme.Intro.Title">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:fontFamily">@font/spacegrotesk_semibold</item>
+        <item name="android:textSize">24dp</item>
+    </style>
+
+    <style name="AppTheme.Intro.Text">
+        <item name="android:textColor">@color/colorTextSecondary</item>
+        <item name="android:fontFamily">@font/spacegrotesk_medium</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:lineSpacingMultiplier">1.4</item>
+    </style>
+
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_sheet_bg</item>
     </style>
