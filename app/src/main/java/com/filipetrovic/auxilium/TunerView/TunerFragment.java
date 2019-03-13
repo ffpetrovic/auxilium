@@ -2,8 +2,10 @@ package com.filipetrovic.auxilium.TunerView;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -102,7 +104,6 @@ public class TunerFragment extends Fragment {
         if(tuner != null && !tuner.isFake && tuner.isRecording) {
             return;
         }
-        Log.d("AUX_LOG", "TUNER START");
         initTuner();
         binding.tunerLine.setPercentage(50.0);
         tuner.start();
@@ -212,6 +213,8 @@ public class TunerFragment extends Fragment {
 
 
                 View settingsItem = popupView.findViewById(R.id.menu_item_settings);
+                View aboutItem = popupView.findViewById(R.id.menu_item_help);
+                View privacyItem = popupView.findViewById(R.id.menu_item_privacy);
                 // Do your customised stuff
 
                 final PopupWindow popupWindow = new PopupWindow(
@@ -229,6 +232,22 @@ public class TunerFragment extends Fragment {
                     public void onClick(View view) {
                         ((MainActivity) getActivity()).openSettings();
                         popupWindow.dismiss();
+                    }
+                });
+                aboutItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Uri uri = Uri.parse(getString(R.string.url_about));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }
+                });
+                privacyItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Uri uri = Uri.parse(getString(R.string.url_privacy));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
                     }
                 });
                 popupWindow.showAsDropDown(binding.menuButton, 1000, -1000);

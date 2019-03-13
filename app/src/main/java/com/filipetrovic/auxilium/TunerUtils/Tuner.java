@@ -151,9 +151,6 @@ public class Tuner {
                         hasValidResult.set(result.frequency > -1);
                         hasCorrectResult.set(getType() == Indicator.INDICATOR_TYPE.CORRECT);
 
-//                        Log.d("AUX_LOG", "valid: " + (getType() != Indicator.INDICATOR_TYPE.INACTIVE));
-//                        Log.d("AUX_LOG", "correct: " + hasCorrectResult.get());
-
                         if(getType() == Indicator.INDICATOR_TYPE.CORRECT && !tunerMode.isChromatic()) {
                             tunerMode.setInTune(result.getNoteLabelWithAugAndOctave());
                         }
@@ -226,7 +223,6 @@ public class Tuner {
             for(int i = 0; i < statusBuffer.length; i++) {
                 if(type != statusBuffer[i]) {
                     type = 1;
-//                    Log.d("AUX_TEST",  type + " " + statusBuffer[i]);
                     break;
                 }
             }
@@ -362,26 +358,5 @@ public class Tuner {
     private native float    getPitch(float[] input);
     private native void     initPitch(int sampleRate, int B);
     private native void     cleanupPitch();
-
-
-    //    private Double getAverageNote() {
-//        double sum = 0;
-//        for(int i = 0; i < notes.length; i++) {
-//            sum += notes[i];
-//        }
-//        return sum / notes.length;
-//    }
-//
-//
-//    private void addNote(Double v) {
-//        for(int i = 0; i < notes.length; i++) {
-//            if(i != notes.length - 1) {
-//                notes[i] = notes[i + 1];
-//            } else {
-//                notes[i] = v;
-//            }
-//            Log.d("AUX_TEST", notes[i] + "");
-//        }
-//    }
 
 }

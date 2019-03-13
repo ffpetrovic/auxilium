@@ -42,4 +42,8 @@ for loud environments</string>
     <string name="intro_permission_button_text">Grant Microphone Access</string>
     <string name="intro_permission_denied_msg">"Microphone permissions are needed for the application to work."</string>
 
+
+    <string name="url_about">https://github.com/ffpetrovic/auxilium</string>
+    <string name="url_privacy">https://github.com/ffpetrovic/auxilium/blob/master/PRIVACY.md</string>
+
 </resources>
