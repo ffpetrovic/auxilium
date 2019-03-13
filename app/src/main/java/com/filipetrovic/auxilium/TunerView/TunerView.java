@@ -14,6 +14,13 @@ import android.graphics.Bitmap;
  */
 public class TunerView extends View {
 
+    /*
+        Main tuner view. Works by keeping 4 different copies of
+        indicators 4 different variations:
+         ACTIVE, INACTIVE, CORRECT and INCORRECT
+         and adjusting the alpha of the according one.
+     */
+
     double yDestination = 0.0;
     double yCurrent = 0.0;
     Paint paint = new Paint();
@@ -86,18 +93,35 @@ public class TunerView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
         int increment = 10;
+
+        /*
+            If false at the end of onDraw(),
+            invalidate() will not be recursively called.
+        */
         needsToDraw = false;
+
+        /*
+            Don't animate if the difference between
+            the destination and current position is small enough.
+        */
         if(Math.abs(yCurrent - yDestination) > .1) {
+            /*
+                Make animation increment as a fraction of the
+                difference between destination and current position.
+            */
             double posIncrement = (Math.abs(yCurrent - yDestination)) / 8.0;
             if(posIncrement > (double) getHeight() / 10.0)
                 posIncrement = (double) getHeight() / 10.0;
+
+            // Animation direction
             if(yCurrent > yDestination) {
                 yCurrent -= posIncrement;
             } else {
                 yCurrent += posIncrement;
             }
-            Log.d("AUX_LOG", yDestination + " " + yCurrent + " " + posIncrement);
+
             needsToDraw = true;
         }
 
@@ -187,8 +211,6 @@ public class TunerView extends View {
 
         bitmap = Bitmap.createBitmap(getWidth(), (int) (getWidth() * (55.0 / 375.0)), Bitmap.Config.ARGB_8888);
         bitmapCanvas = new Canvas(bitmap);
-
-//        Log.d("AUX_LOG", bitmap.height.toString() +  " " + canvas.width.toString());
 
         indicatorCorrectDrawable.setBounds(0, 0, bitmap.getWidth(), bitmap.getHeight());
         indicatorCorrectDrawable.draw(bitmapCanvas);

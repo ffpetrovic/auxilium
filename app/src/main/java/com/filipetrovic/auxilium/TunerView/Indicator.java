@@ -18,8 +18,6 @@ import com.filipetrovic.auxilium.R;
 
 public class Indicator extends Drawable {
 
-    private int indicatorHeight, indicatorBgHeight;
-
     public enum INDICATOR_TYPE {
         ACTIVE,
         CORRECT,
@@ -29,6 +27,8 @@ public class Indicator extends Drawable {
 
     Paint mPaint;
     Drawable indicatorDrawable;
+    int indicatorHeight;
+    int indicatorBgHeight;
 
     Rect mRect;
     Rect mRectBg;

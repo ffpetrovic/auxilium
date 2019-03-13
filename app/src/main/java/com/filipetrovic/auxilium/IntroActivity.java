@@ -15,16 +15,24 @@ import android.widget.Toast;
 
 public class IntroActivity extends AppCompatActivity {
 
+    /*
+        Launcher activity used for requesting permissions.
+        If permissions are granted, move onto MainActivity.
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // If microphone permissions are granted, open MainActivity.
         if(ContextCompat.checkSelfPermission(this,
                 Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
             openMainActivity();
         }
 
+        // Set AppTheme to remove Splash Screen background.
         setTheme(R.style.AppTheme);
+
         setContentView(R.layout.activity_intro);
 
         findViewById(R.id.intro_permission_button).setOnClickListener(new View.OnClickListener() {

@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 public class ModesActivity extends AppCompatActivity {
 
+    /* Used as a container for TunerModesDialog */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

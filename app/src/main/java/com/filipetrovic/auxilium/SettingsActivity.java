@@ -9,6 +9,10 @@ import com.filipetrovic.auxilium.Dialog.AlertDialog;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    /*
+        Used as a view wrapper for SettingsFragment
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

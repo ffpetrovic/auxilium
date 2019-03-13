@@ -15,7 +15,10 @@ import android.view.WindowManager;
 public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set AppTheme to remove Splash Screen background.
         setTheme(R.style.AppTheme);
+
         setContentView(R.layout.activity_main);
     }
 

@@ -67,12 +67,12 @@ public class TunerFragment extends Fragment {
         binding.setCurrentNotePlaying(soundPlayer.currentNote);
     }
 
-    private void noteFound(final TunerResult note) {
+    private void noteFound(final TunerResult result) {
         if(getActivity() != null && !tuner.isMuted()) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    binding.setResult(note);
+                    binding.setResult(result);
                 }
             });
         }
