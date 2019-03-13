@@ -104,7 +104,7 @@ public class TunerFragment extends Fragment {
         }
         Log.d("AUX_LOG", "TUNER START");
         initTuner();
-        binding.tunerLine.setPercentage(50f);
+        binding.tunerLine.setPercentage(50.0);
         tuner.start();
         tuner.setOnNoteFoundListener(new Tuner.OnNoteFoundListener() {
             @Override

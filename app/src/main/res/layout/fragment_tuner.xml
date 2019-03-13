@@ -259,57 +259,6 @@
             android:background="@drawable/collection_block_bg"
             app:notes="@{tuner.tunerMode.getNotesObjectsForGroup()}" />
 
-
-        <!--<LinearLayout-->
-        <!--android:id="@+id/viewCurrentNotePlayingIndicator"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="60dp"-->
-        <!--app:isBottomBlockActive="@{!currentNotePlaying.equals(``)}"-->
-        <!--android:gravity="center"-->
-        <!--android:visibility="gone">-->
-        <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="vertical"-->
-        <!--android:visibility="@{ !currentNotePlaying.equals(``) ? View.VISIBLE : View.GONE }">-->
-        <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="0"-->
-        <!--android:textSize="16dp"-->
-        <!--android:textAlignment="center"-->
-        <!--android:fontFamily="@font/spacegrotesk_bold"-->
-        <!--android:text="@{`Playing ` + currentNotePlaying.get() + ` . . .` }" />-->
-        <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="0"-->
-        <!--android:textColor="@color/colorTextSecondary"-->
-        <!--android:textSize="12dp"-->
-        <!--android:textAlignment="center"-->
-        <!--android:textAllCaps="true"-->
-        <!--android:letterSpacing="0.1"-->
-        <!--android:fontFamily="@font/spacegrotesk_bold"-->
-        <!--android:text="Tap to stop" />-->
-        <!--</LinearLayout>-->
-        <!--</LinearLayout>-->
-        <!-- Navigation Bar -->
-        <!--<com.filipetrovic.auxilium.TunerView.TunerNavigationBlock-->
-            <!--android:id="@+id/navigation_block_pick"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="64dp"-->
-            <!--android:background="@drawable/rect_selector"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintEnd_toStartOf="@+id/navigation_block_automatic"-->
-            <!--app:layout_constraintHorizontal_bias="0.5"-->
-            <!--app:layout_constraintHorizontal_chainStyle="spread_inside"-->
-            <!--app:layout_constraintHorizontal_weight="1"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:nbGroupText="@{``}"-->
-            <!--app:nbImage="@{@drawable/ic_mode_automatic}"-->
-            <!--app:nbImageActive="@{@drawable/ic_mode_automatic_active}"-->
-            <!--app:nbIsActive="@{tuner.tunerMode.isChromatic()}"-->
-            <!--app:nbText="@{`Automatic`}" />-->
         <com.filipetrovic.auxilium.TunerView.TunerNavigationBlock
             android:id="@+id/navigation_block_pick"
             android:layout_width="0dp"
